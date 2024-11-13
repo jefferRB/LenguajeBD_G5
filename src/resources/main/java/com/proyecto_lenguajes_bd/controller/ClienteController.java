@@ -1,4 +1,4 @@
-package com.proyecto.controller;
+package com.proyecto_lenguajes_bd.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

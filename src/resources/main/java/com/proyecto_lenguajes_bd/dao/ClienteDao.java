@@ -1,4 +1,4 @@
-package com.proyecto.dao;
+package com.proyecto_lenguajes_bd.dao;
 
 import com.proyecto.domain.Cliente;
 import org.springframework.data.jpa.repository.JpaRepository;

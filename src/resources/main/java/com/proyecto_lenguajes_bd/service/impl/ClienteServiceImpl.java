@@ -1,4 +1,4 @@
-package com.proyecto.service;
+package com.proyecto_lenguajes_bd.service.impl;
 
 import com.proyecto.domain.Cliente;
 import java.util.List;

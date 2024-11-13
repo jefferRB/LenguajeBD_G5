@@ -1,7 +1,7 @@
-package com.proyecto.domain;
+package com.proyecto_lenguajes_bd.domain;
 
 import jakarta.persistence.*;
-import jakarta.persistence.Table;
+
 import java.io.Serializable;
 import lombok.Data;
 
@@ -16,7 +16,7 @@ public class Cliente implements Serializable {
 
     private static final long serialVersionUID = 1l;
     @Id
-    @Column(name = "id")
+    @Column(name = "cedula")
     private Long id;
     private String nombre;
     private String primerApellido;
