@@ -17,11 +17,11 @@ public class Cliente implements Serializable {
     private static final long serialVersionUID = 1l;
     @Id
     @Column(name = "cedula")
-    private Long id;
-    private String nombre;
-    private String primerApellido;
-    private String segundoApellido;
-    private String email;
-    private String password;
+    private Long CLIENTE_ID;
+    private String NOMBRE;
+    private String P_APELLIDO;
+    private String S_APELLIDO;
+    private String CORREO;
+ 
 
 }

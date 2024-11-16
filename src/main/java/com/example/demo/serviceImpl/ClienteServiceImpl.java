@@ -27,7 +27,7 @@ public class ClienteServiceImpl implements ClienteService {
 
     @Override
     public Cliente getCliente(Cliente cliente) {
-        return clienteDao.findById(cliente.getId()).orElse(null);
+        return clienteDao.findById(cliente.getCLIENTE_ID()).orElse(null);
     }
 
     @Override

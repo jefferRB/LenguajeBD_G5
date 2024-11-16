@@ -9,15 +9,14 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
-// aaa
 
 
 public class Conexion {
 
     private static Connection conn = null;
-    private static String login = "c##ColegioSS";
-    private static String clave = "hola123";
-    private static String url = "jdbc:oracle:thin:@localhost:1521:orcl";
+    private static String login = "JAVA";
+    private static String clave = "JAVA";
+    private static String url = "jdbc:oracle:thin:@localhost:1521:orcl1";
     
     public static Connection getConnection(){
         try {
