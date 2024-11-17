@@ -1,12 +1,12 @@
 package com.example.demo.serviceImpl;
 
+import com.example.demo.dao.ClienteDao;
 import com.example.demo.domain.Cliente;
-import java.util.List;
+import com.example.demo.service.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.demo.service.ClienteService;
-import com.example.demo.dao.ClienteDao;
+import java.util.List;
 
 /**
  *
@@ -20,9 +20,7 @@ public class ClienteServiceImpl implements ClienteService {
 
     @Override
     public List<Cliente> getClientes() {
-        var lista = clienteDao.findAll();
-
-        return lista;
+        return clienteDao.findAll();
     }
 
     @Override
@@ -37,8 +35,6 @@ public class ClienteServiceImpl implements ClienteService {
 
     @Override
     public void delete(Cliente cliente) {
-        clienteDao.delete(cliente);
+        clienteDao.deleteById(cliente.getId());
     }
-    
-
 }
