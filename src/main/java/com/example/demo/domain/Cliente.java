@@ -16,12 +16,12 @@ public class Cliente implements Serializable {
 
     private static final long serialVersionUID = 1l;
     @Id
-    @Column(name = "cedula")
-    private Long CLIENTE_ID;
-    private String NOMBRE;
-    private String P_APELLIDO;
-    private String S_APELLIDO;
-    private String CORREO;
+    @Column(name = "CLIENTE_ID")
+    private Long clienteId;
+    private String nombre;
+    private String pApellido;
+    private String sApellido;
+    private String correo;
  
 
 }

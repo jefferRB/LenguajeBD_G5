@@ -1,5 +1,6 @@
 package com.example.demo.serviceImpl;
 
+import com.example.demo.conexion.Conexion;
 import com.example.demo.domain.Cliente;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,9 @@ import org.springframework.stereotype.Service;
 
 import com.example.demo.service.ClienteService;
 import com.example.demo.dao.ClienteDao;
+import jakarta.transaction.Transactional;
+import java.sql.Connection;
+import ora_query.Ora_Cliente;
 
 /**
  *
@@ -17,6 +21,7 @@ public class ClienteServiceImpl implements ClienteService {
 
     @Autowired
     private ClienteDao clienteDao;
+    private Ora_Cliente clien = new Ora_Cliente();
 
     @Override
     public List<Cliente> getClientes() {
@@ -27,7 +32,7 @@ public class ClienteServiceImpl implements ClienteService {
 
     @Override
     public Cliente getCliente(Cliente cliente) {
-        return clienteDao.findById(cliente.getCLIENTE_ID()).orElse(null);
+        return clienteDao.findById(cliente.getClienteId()).orElse(null);
     }
 
     @Override
@@ -39,6 +44,45 @@ public class ClienteServiceImpl implements ClienteService {
     public void delete(Cliente cliente) {
         clienteDao.delete(cliente);
     }
-    
+
+    @Override
+    @Transactional
+    public void update(Cliente cliente) {
+        Connection conn = Conexion.getConnection();
+        try {
+            clien.modificarCliente(conn, cliente);
+        } catch (Exception e) {
+            e.getMessage();
+        } finally {
+            try {
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (Exception e) {
+                e.getMessage();
+            }
+        }
+    }
+
+    @Override
+    @Transactional
+    public int getClientesSize() {
+        Connection conn = Conexion.getConnection();
+        try {
+            return clien.getClientesSize(conn);
+
+        } catch (Exception e) {
+            e.getMessage();
+        } finally {
+            try {
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (Exception e) {
+                e.getMessage();
+            }
+        }
+        return 0;
+    }
 
 }
