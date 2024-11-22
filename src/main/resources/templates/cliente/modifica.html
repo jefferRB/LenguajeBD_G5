@@ -1,22 +1,56 @@
 <!DOCTYPE html>
-<!--
-Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
--->
-<html>
-    <head>
-        <title>TODO supply a title</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
-    <body>
-        
-        <header th:replace="~{layout/plantilla :: header}"/>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout/plantilla :: head}">
+    <title>Editar Cliente</title>
+    <meta charset="UTF-8" />
+</head>
+<body>
+    <header th:replace="~{layout/plantilla :: header}" />
+    
+    <!-- Formulario de edición -->
+    <section th:fragment="editarClientes">
+        <div class="row">
+            <div class="col-md-2"></div>
+            <div class="col-md-8">
+                <form method="POST" th:action="@{/cliente/guardar}" th:object="${cliente}" class="was-validated">
+                    <input type="hidden" name="clienteId" th:field="*{clienteId}" />
+                    <div id="details">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h4>[[#{accion.actualizar}]]</h4>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="nombre">[[#{cliente.nombre}]]</label>
+                                            <input type="text" class="form-control" name="nombre" th:field="*{nombre}" required="true" />
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="primerApellido">[[#{cliente.primerApellido}]]</label>
+                                            <input type="text" class="form-control" name="primerApellido" th:field="*{primerApellido}" required="true" />
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="segundoApellido">[[#{cliente.segundoApellido}]]</label>
+                                            <input type="text" class="form-control" name="segundoApellido" th:field="*{segundoApellido}" required="true" />
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="correo">[[#{cliente.correo}]]</label>
+                                            <input type="email" class="form-control" name="correo" th:field="*{correo}" required="true" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-success">Guardar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
 
-        <section th:replace="~{cliente/fragmentos :: editarCliente}"/>
-
-        
-        <footer th:replace="~{layout/plantilla :: footer}"/>
-
-    </body>
+    <footer th:replace="~{layout/plantilla :: footer}" />
+</body>
 </html>

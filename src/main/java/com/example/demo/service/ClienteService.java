@@ -1,25 +1,18 @@
 package com.example.demo.service;
 
-
-import java.util.List;
-
 import com.example.demo.domain.Cliente;
-
+import java.util.List;
 /**
  *
  * @author jeffer
  */
 public interface ClienteService {
 
-    public List<Cliente> getClientes();
+    List<Cliente> getClientes();
 
-    public Cliente getCliente(Cliente cliente);
+    Cliente getCliente(Cliente cliente);
 
-    public void save(Cliente cliente);
+    void save(Cliente cliente);
 
-    public void delete(Cliente cliente);
-    
-    public void update(Cliente cliente);
-    
-    public int getClientesSize();
+    void delete(Cliente cliente);
 }

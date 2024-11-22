@@ -1,0 +1,29 @@
+<section th:fragment="listadoCategorias">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-9">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombre</th>
+                            <th>Descripción</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="categoria : ${categorias}">
+                            <td>[[${categoria.categoriaId}]]</td>
+                            <td>[[${categoria.nombre}]]</td>
+                            <td>[[${categoria.descripcion}]]</td>
+                            <td>
+                                <a th:href="@{/categoriaProducto/modifica/}+${categoria.categoriaId}" class="btn btn-success">Editar</a>
+                                <a th:href="@{/categoriaProducto/eliminar/}+${categoria.categoriaId}" class="btn btn-danger">Eliminar</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>

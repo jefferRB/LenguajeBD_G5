@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout/plantilla :: head}" />
+<body>
+    <header th:replace="~{layout/plantilla :: header}" />
+    <div class="container">
+        <h2>Editar Precio</h2>
+        <form th:action="@{/precio/guardar}" th:object="${precio}" method="POST" class="was-validated">
+            <input type="hidden" th:field="*{precioId}" />
+            <label>Producto</label>
+            <input type="number" th:field="*{productoId}" class="form-control" required />
+            <label>Precio</label>
+            <input type="number" th:field="*{precio}" step="0.01" class="form-control" required />
+            <label>Fecha Vigencia</label>
+            <input type="date" th:field="*{fechaVigencia}" class="form-control" required />
+            <button type="submit" class="btn btn-primary mt-3">Guardar</button>
+        </form>
+    </div>
+    <footer th:replace="~{layout/plantilla :: footer}" />
+</body>
+</html>
