@@ -7,6 +7,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
  *
  * @author jeffe
  */
-public interface ClienteDao extends 
-        JpaRepository<Cliente, Long> {
+public interface ClienteDao extends JpaRepository<Cliente, Long> {
 }
