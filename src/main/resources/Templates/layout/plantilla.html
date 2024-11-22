@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:th="http://www.thymeleaf.org">
+    <head th:fragment="head">
+        <title>Ventas jeff</title>
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+            <meta charset="UTF-8"/>
+            <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+                <link th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" rel="stylesheet"/>
+                <link th:href="@{/webjars/font-awesome/css/all.css}" rel="stylesheet"/>
+                <script th:src="@{/js/rutinas.js}"></script>
+                <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+                <script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+                <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+                <script src="script.js"></script>
+
+                <style>
+
+                    body {
+                        margin: 0;
+                        padding: 0;
+                    }
+                    .split-container {
+                        display: flex;
+                        height: 85vh;
+                    }
+                    .split-container .split-right {
+                        position: relative;
+                        flex: 1;
+                        background-color: black;
+                        color: white;
+                    }
+                    .split-container {
+                        font-family: Arial, sans-serif;
+                        font-size: 24px;
+                    }
+                    .split-container .split-left {
+                        flex: 1;
+                        background-image: url('');
+                        background-repeat: no-repeat;
+                        background-position: center;
+                        background-color: #e9e9e9;
+                    }
+                </style>
+
+                <style>
+                    .btn-custom{
+                        width: 100px;
+                        height: 40px;
+                    }
+                </style>
+
+                </head>
+
+                <body>
+
+                    <header th:fragment="header" class="header">
+                        <nav class="navbar-expand-sm bg-black p-2">
+                            <div class="container d-flex justify-content-center">
+                                <a th:href="@{/}" class="navbar-brand d-inline-block text-white">
+                                    <h1>Ventas</h1>
+                                </a>
+                            </div>
+                        </nav>
+
+                        <section id="main-header" style="background-color: #0b783c" class="p-3">
+                            <section th:fragment="botonHombre">
+                                <div class="container">
+                                    <div class="row justify-content-center list-unstyled">
+                                                                                <div class="col text-center">
+                                            <li class="nav-item px-2"><a class="nav-link" th:href="@{/clientes/listado}"><b>Clientes</b></a></li>
+                                        </div>
+                                        <div class="col text-center">
+                                            <li class="nav-item px-2"><a class="nav-link" th:href="@{/profesor/listado}"><b>Profesores</b></a></li>
+                                        </div>
+                                        <div class="col text-center">
+                                            <li class="nav-item px-2"><a class="nav-link" th:href="@{/seccion/listado}"><b>Secciones</b></a></li>
+                                        </div>
+                  
+                                </div>
+                            </section>
+                        </section>
+                    </header>
+
+                    <div th:fragment="principal" class="split-container">
+                        <div class="split-left">
+
+                        </div>
+                        <div class="split-right">
+                            <div class="container-custom">
+                                <h1>Bienvenidos</h1><br>
+                                    <h4>Está es la página</h4>
+                                    <br>
+                                  
+                                        </div>
+                                        </div>
+                                        </div>
+
+                                        <style>
+                                            .container-custom{
+                                                width: 500px;
+                                                height: 450px;
+                                                position: absolute;
+                                                top: 265px;
+                                                left: 115px;
+                                            }
+                                            .container-custom h4 {
+                                                overflow-wrap: break-word;
+                                            }
+                                        </style>
+
+                                        <footer th:fragment="footer" style="width: 100%"
+                                                class="bg-black text-white mt-5 p2 position-absolute bottom-0 start-50 translate-middle-x">
+                                            <div class="container">
+                                                <div class="col lead text-center">
+                                                    <p>&COPY ventas Derechos Reservados</p>
+                                                </div>
+                                            </div>
+                                        </footer>
+                                        </body>
+                                        </html>
+

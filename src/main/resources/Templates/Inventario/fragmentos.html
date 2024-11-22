@@ -1,0 +1,31 @@
+<section th:fragment="listadoInventarios">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-9">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Producto ID</th>
+                            <th>Última Actualización</th>
+                            <th>Cantidad Disponible</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="inventario : ${inventarios}">
+                            <td>[[${inventario.inventarioId}]]</td>
+                            <td>[[${inventario.productoId}]]</td>
+                            <td>[[${inventario.ultimaActualizacion}]]</td>
+                            <td>[[${inventario.cantidadDisponible}]]</td>
+                            <td>
+                                <a th:href="@{/inventario/modifica/}+${inventario.inventarioId}" class="btn btn-success">Editar</a>
+                                <a th:href="@{/inventario/eliminar/}+${inventario.inventarioId}" class="btn btn-danger">Eliminar</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,33 @@
+<section th:fragment="listadoDescuentos">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-9">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Producto</th>
+                            <th>Descuento</th>
+                            <th>Fecha Inicio</th>
+                            <th>Fecha Fin</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="descuento : ${descuentos}">
+                            <td>[[${descuento.descuentoId}]]</td>
+                            <td>[[${descuento.productoId}]]</td>
+                            <td>[[${descuento.descuento}]]</td>
+                            <td>[[${descuento.fechaInicio}]]</td>
+                            <td>[[${descuento.fechaFin}]]</td>
+                            <td>
+                                <a th:href="@{/descuento/modifica/}+${descuento.descuentoId}" class="btn btn-success">Editar</a>
+                                <a th:href="@{/descuento/eliminar/}+${descuento.descuentoId}" class="btn btn-danger">Eliminar</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
