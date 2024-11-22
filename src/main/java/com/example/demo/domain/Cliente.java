@@ -1,41 +1,63 @@
 package com.example.demo.domain;
 
+import jakarta.persistence.*;
+<<<<<<< Updated upstream
+
 import java.io.Serializable;
-
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+=======
+import lombok.AllArgsConstructor;
+>>>>>>> Stashed changes
 import lombok.Data;
-
+import lombok.NoArgsConstructor;
+import java.io.Serializable;
 
 /**
  *
  * @author jeffer
  */
-@Data 
+@Data
+<<<<<<< Updated upstream
+=======
+@AllArgsConstructor
+@NoArgsConstructor
+>>>>>>> Stashed changes
 @Entity
-@Table(name = "clientes")
+@Table(name = "CLIENTES")
 public class Cliente implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-
+<<<<<<< Updated upstream
+    private static final long serialVersionUID = 1l;
     @Id
-    @Column(name = "cedula", nullable = false, unique = true)
-    private Long id;
+    @Column(name = "CLIENTE_ID")
+    private Long clienteId;
+=======
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long clienteId;
 
-    @Column(name = "nombre", nullable = false, length = 50)
+    @Column(name = "NOMBRE", nullable = false, length = 50)
+>>>>>>> Stashed changes
     private String nombre;
+    private String pApellido;
+    private String sApellido;
+    private String correo;
+ 
 
-    @Column(name = "primer_apellido", nullable = false, length = 50)
+<<<<<<< Updated upstream
+}
+=======
+    @Column(name = "P_APELLIDO", nullable = false, length = 50)
     private String primerApellido;
 
-    @Column(name = "segundo_apellido", length = 50)
+    @Column(name = "S_APELLIDO", nullable = false, length = 50)
     private String segundoApellido;
 
-    @Column(name = "email", nullable = false, unique = true, length = 100)
-    private String email;
+    @Column(name = "CORREO", nullable = false, length = 100)
+    private String correo;
 
-    @Column(name = "password", nullable = false, length = 255)
-    private String password;
+   
+    public Cliente(Long clienteId) {
+        this.clienteId = clienteId;
+    }
 }
+>>>>>>> Stashed changes

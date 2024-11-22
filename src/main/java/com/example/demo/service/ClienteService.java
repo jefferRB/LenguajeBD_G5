@@ -1,20 +1,28 @@
 package com.example.demo.service;
 
+<<<<<<< Updated upstream
+
 import java.util.List;
 
+=======
+>>>>>>> Stashed changes
 import com.example.demo.domain.Cliente;
-
+import java.util.List;
 /**
  *
  * @author jeffer
  */
 public interface ClienteService {
 
-    List<Cliente> getClientes();
+    public List<Cliente> getClientes();
 
-    Cliente getCliente(Cliente cliente);
+    public Cliente getCliente(Cliente cliente);
 
-    void save(Cliente cliente);
+    public void save(Cliente cliente);
 
-    void delete(Cliente cliente);
+    public void delete(Cliente cliente);
+    
+    public void update(Cliente cliente);
+    
+    public int getClientesSize();
 }
