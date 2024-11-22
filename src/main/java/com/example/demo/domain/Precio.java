@@ -6,7 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.io.Serializable;
 import java.util.Date;
-
 /**
  *
  * @author Tom
@@ -15,25 +14,25 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "INVENTARIOS")
-public class Inventario implements Serializable {
+@Table(name = "PRECIOS")
+public class Precio implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long inventarioId;
+    private Long precioId;
 
     @Column(name = "PRODUCTO_ID", nullable = false)
     private Long productoId;
 
-    @Column(name = "ULTIMA_ACTUALIZACION", nullable = false)
-    @Temporal(TemporalType.DATE)
-    private Date ultimaActualizacion;
+    @Column(name = "PRECIO", nullable = false)
+    private Double precio;
 
-    @Column(name = "CANTIDAD_DISPONIBLE", nullable = false)
-    private Integer cantidadDisponible;
+    @Column(name = "FECHA_VIGENCIA", nullable = false)
+    @Temporal(TemporalType.DATE)
+    private Date fechaVigencia;
 
    
-    public Inventario(Long inventarioId) {
-        this.inventarioId = inventarioId;
+    public Precio(Long precioId) {
+        this.precioId = precioId;
     }
 }

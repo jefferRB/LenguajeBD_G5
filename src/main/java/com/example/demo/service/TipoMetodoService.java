@@ -8,9 +8,12 @@ import java.util.List;
  * @author Tom
  */
 public interface TipoMetodoService {
-    List<TipoMetodo> getTipos();
-    TipoMetodo getTipoById(Long id);
+
+    List<TipoMetodo> getTiposMetodo();
+
+    TipoMetodo getTipoMetodo(TipoMetodo tipoMetodo);
+
     void save(TipoMetodo tipoMetodo);
-    void update(Long id, TipoMetodo tipoMetodo);
-    void delete(Long id);
+
+    void delete(TipoMetodo tipoMetodo);
 }

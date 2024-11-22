@@ -1,27 +1,33 @@
 package com.example.demo.domain;
 
 import jakarta.persistence.*;
-import java.io.Serializable;
+import lombok.AllArgsConstructor;
 import lombok.Data;
-
+import lombok.NoArgsConstructor;
+import java.io.Serializable;
 /**
  *
  * @author Tom
  */
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
-@Table(name = "CategoriaProducto")
+@Table(name = "CATEGORIA_PRODUCTOS")
 public class CategoriaProducto implements Serializable {
-    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "CategoriaID")
-    private Long id;
+    private Long categoriaId;
 
-    @Column(name = "Nombre", nullable = false)
+    @Column(name = "NOMBRE", nullable = false, length = 100)
     private String nombre;
 
-    @Column(name = "Descripcion")
+    @Column(name = "DESCRIPCION", nullable = true, length = 200)
     private String descripcion;
+
+ 
+    public CategoriaProducto(Long categoriaId) {
+        this.categoriaId = categoriaId;
+    }
 }

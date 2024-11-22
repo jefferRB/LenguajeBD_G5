@@ -1,13 +1,13 @@
 package com.example.demo.serviceImpl;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.example.demo.dao.InventarioDao;
 import com.example.demo.domain.Inventario;
 import com.example.demo.service.InventarioService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 /**
  *
@@ -20,22 +20,26 @@ public class InventarioServiceImpl implements InventarioService {
     private InventarioDao inventarioDao;
 
     @Override
-    public List<Inventario> listarInventarios() {
-        return (List<Inventario>) inventarioDao.findAll();
+    @Transactional(readOnly = true)
+    public List<Inventario> getInventarios() {
+        return inventarioDao.findAll();
     }
 
     @Override
-    public Inventario guardarInventario(Inventario inventario) {
-        return inventarioDao.save(inventario);
+    @Transactional(readOnly = true)
+    public Inventario getInventario(Inventario inventario) {
+        return inventarioDao.findById(inventario.getInventarioId()).orElse(null);
     }
 
     @Override
-    public void eliminarInventario(Long id) {
-        inventarioDao.deleteById(id);
+    @Transactional
+    public void save(Inventario inventario) {
+        inventarioDao.save(inventario);
     }
 
     @Override
-    public Inventario encontrarInventarioPorId(Long id) {
-        return inventarioDao.findById(id).orElse(null);
+    @Transactional
+    public void delete(Inventario inventario) {
+        inventarioDao.delete(inventario);
     }
 }

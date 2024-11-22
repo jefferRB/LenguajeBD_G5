@@ -5,6 +5,7 @@ import com.example.demo.domain.Pedido;
 import com.example.demo.service.PedidoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -20,28 +21,26 @@ public class PedidoServiceImpl implements PedidoService {
     private PedidoDao pedidoDao;
 
     @Override
+    @Transactional(readOnly = true)
     public List<Pedido> getPedidos() {
         return pedidoDao.findAll();
     }
 
     @Override
-    public Pedido getPedidoById(Long id) {
-        return pedidoDao.findById(id).orElse(null);
+    @Transactional(readOnly = true)
+    public Pedido getPedido(Pedido pedido) {
+        return pedidoDao.findById(pedido.getPedidoId()).orElse(null);
     }
 
     @Override
+    @Transactional
     public void save(Pedido pedido) {
         pedidoDao.save(pedido);
     }
 
     @Override
-    public void update(Long id, Pedido pedido) {
-        pedido.setId(id);
-        pedidoDao.save(pedido);
-    }
-
-    @Override
-    public void delete(Long id) {
-        pedidoDao.deleteById(id);
+    @Transactional
+    public void delete(Pedido pedido) {
+        pedidoDao.delete(pedido);
     }
 }

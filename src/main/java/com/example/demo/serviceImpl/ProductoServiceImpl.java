@@ -5,6 +5,7 @@ import com.example.demo.domain.Producto;
 import com.example.demo.service.ProductoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -19,28 +20,26 @@ public class ProductoServiceImpl implements ProductoService {
     private ProductoDao productoDao;
 
     @Override
+    @Transactional(readOnly = true)
     public List<Producto> getProductos() {
         return productoDao.findAll();
     }
 
     @Override
-    public Producto getProductoById(Long id) {
-        return productoDao.findById(id).orElse(null);
+    @Transactional(readOnly = true)
+    public Producto getProducto(Producto producto) {
+        return productoDao.findById(producto.getProductoId()).orElse(null);
     }
 
     @Override
+    @Transactional
     public void save(Producto producto) {
         productoDao.save(producto);
     }
 
     @Override
-    public void update(Long id, Producto producto) {
-        producto.setId(id);
-        productoDao.save(producto);
-    }
-
-    @Override
-    public void delete(Long id) {
-        productoDao.deleteById(id);
+    @Transactional
+    public void delete(Producto producto) {
+        productoDao.delete(producto);
     }
 }

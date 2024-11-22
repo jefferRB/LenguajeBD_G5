@@ -1,17 +1,19 @@
 package com.example.demo.service;
 
-import java.util.List;
-
 import com.example.demo.domain.MetodoPago;
+import java.util.List;
 
 /**
  *
  * @author Tom
  */
 public interface MetodoPagoService {
-    List<MetodoPago> getMetodos();
-    MetodoPago getMetodoById(Long id);
+
+    List<MetodoPago> getMetodosPago();
+
+    MetodoPago getMetodoPago(MetodoPago metodoPago);
+
     void save(MetodoPago metodoPago);
-    void update(Long id, MetodoPago metodoPago);
-    void delete(Long id);
+
+    void delete(MetodoPago metodoPago);
 }

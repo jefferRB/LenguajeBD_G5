@@ -1,36 +1,43 @@
 package com.example.demo.domain;
 
 import jakarta.persistence.*;
-import java.io.Serializable;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import java.io.Serializable;
 
 /**
  *
  * @author Tom
  */
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
-@Table(name = "Proveedor")
+@Table(name = "PROVEEDORES")
 public class Proveedor implements Serializable {
-    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ProveedorID")
-    private Long id;
+    private Long proveedorId;
 
-    @Column(name = "Nombre", nullable = false)
+    @Column(name = "NOMBRE", nullable = false, length = 100)
     private String nombre;
 
-    @Column(name = "PrimerApellido", nullable = false)
+    @Column(name = "PRIMER_APELLIDO", nullable = true, length = 100)
     private String primerApellido;
 
-    @Column(name = "SegundoApellido")
+    @Column(name = "SEGUNDO_APELLIDO", nullable = true, length = 100)
     private String segundoApellido;
 
-    @Column(name = "Contacto", nullable = false)
+    @Column(name = "CONTACTO", nullable = false, length = 20)
     private String contacto;
 
-    @Column(name = "CondicionesCompra")
+    @Column(name = "CONDICIONES_COMPRA", nullable = true, length = 200)
     private String condicionesCompra;
+
+  
+    public Proveedor(Long proveedorId) {
+        this.proveedorId = proveedorId;
+    }
 }

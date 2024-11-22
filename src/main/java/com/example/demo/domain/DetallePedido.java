@@ -1,44 +1,37 @@
 package com.example.demo.domain;
 
-import java.io.Serializable;
-
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import java.io.Serializable;
 
 /**
  *
  * @author Tom
  */
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
-@Table(name = "DetallePedido")
+@Table(name = "DETALLE_PEDIDOS")
 public class DetallePedido implements Serializable {
-
-    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "DetallePedidoID")
-    private Long id;
+    private Long detallePedidoId;
 
-    @ManyToOne
-    @JoinColumn(name = "ProductoID", nullable = false)
-    private Producto producto;
+    @Column(name = "PEDIDO_ID", nullable = false)
+    private Long pedidoId;
 
-    @ManyToOne
-    @JoinColumn(name = "PedidoID", nullable = false)
-    private Pedido pedido;
+    @Column(name = "PRODUCTO_ID", nullable = false)
+    private Long productoId;
 
-    @Column(name = "Cantidad", nullable = false)
-    private int cantidad;
+    @Column(name = "CANTIDAD", nullable = false)
+    private Integer cantidad;
 
-    @Column(name = "PrecioUnidad", nullable = false)
-    private double precioUnidad;
+   
+    public DetallePedido(Long detallePedidoId) {
+        this.detallePedidoId = detallePedidoId;
+    }
 }

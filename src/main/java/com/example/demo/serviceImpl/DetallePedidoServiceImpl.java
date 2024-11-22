@@ -1,13 +1,13 @@
 package com.example.demo.serviceImpl;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.example.demo.dao.DetallePedidoDao;
 import com.example.demo.domain.DetallePedido;
 import com.example.demo.service.DetallePedidoService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 /**
  *
@@ -20,22 +20,26 @@ public class DetallePedidoServiceImpl implements DetallePedidoService {
     private DetallePedidoDao detallePedidoDao;
 
     @Override
-    public List<DetallePedido> getDetalles() {
+    @Transactional(readOnly = true)
+    public List<DetallePedido> getDetallesPedido() {
         return detallePedidoDao.findAll();
     }
 
     @Override
-    public DetallePedido getDetalleById(Long id) {
-        return detallePedidoDao.findById(id).orElse(null);
+    @Transactional(readOnly = true)
+    public DetallePedido getDetallePedido(DetallePedido detallePedido) {
+        return detallePedidoDao.findById(detallePedido.getDetallePedidoId()).orElse(null);
     }
 
     @Override
+    @Transactional
     public void save(DetallePedido detallePedido) {
         detallePedidoDao.save(detallePedido);
     }
 
     @Override
-    public void delete(Long id) {
-        detallePedidoDao.deleteById(id);
+    @Transactional
+    public void delete(DetallePedido detallePedido) {
+        detallePedidoDao.delete(detallePedido);
     }
 }

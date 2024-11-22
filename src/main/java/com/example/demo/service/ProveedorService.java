@@ -8,9 +8,12 @@ import java.util.List;
  * @author Tom
  */
 public interface ProveedorService {
+
     List<Proveedor> getProveedores();
-    Proveedor getProveedorById(Long id);
+
+    Proveedor getProveedor(Proveedor proveedor);
+
     void save(Proveedor proveedor);
-    void update(Long id, Proveedor proveedor);
-    void delete(Long id);
+
+    void delete(Proveedor proveedor);
 }

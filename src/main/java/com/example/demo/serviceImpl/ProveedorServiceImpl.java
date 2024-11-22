@@ -5,6 +5,7 @@ import com.example.demo.domain.Proveedor;
 import com.example.demo.service.ProveedorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -19,28 +20,26 @@ public class ProveedorServiceImpl implements ProveedorService {
     private ProveedorDao proveedorDao;
 
     @Override
+    @Transactional(readOnly = true)
     public List<Proveedor> getProveedores() {
         return proveedorDao.findAll();
     }
 
     @Override
-    public Proveedor getProveedorById(Long id) {
-        return proveedorDao.findById(id).orElse(null);
+    @Transactional(readOnly = true)
+    public Proveedor getProveedor(Proveedor proveedor) {
+        return proveedorDao.findById(proveedor.getProveedorId()).orElse(null);
     }
 
     @Override
+    @Transactional
     public void save(Proveedor proveedor) {
         proveedorDao.save(proveedor);
     }
 
     @Override
-    public void update(Long id, Proveedor proveedor) {
-        proveedor.setId(id);
-        proveedorDao.save(proveedor);
-    }
-
-    @Override
-    public void delete(Long id) {
-        proveedorDao.deleteById(id);
+    @Transactional
+    public void delete(Proveedor proveedor) {
+        proveedorDao.delete(proveedor);
     }
 }

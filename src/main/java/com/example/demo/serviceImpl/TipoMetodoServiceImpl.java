@@ -5,6 +5,7 @@ import com.example.demo.domain.TipoMetodo;
 import com.example.demo.service.TipoMetodoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -19,28 +20,26 @@ public class TipoMetodoServiceImpl implements TipoMetodoService {
     private TipoMetodoDao tipoMetodoDao;
 
     @Override
-    public List<TipoMetodo> getTipos() {
+    @Transactional(readOnly = true)
+    public List<TipoMetodo> getTiposMetodo() {
         return tipoMetodoDao.findAll();
     }
 
     @Override
-    public TipoMetodo getTipoById(Long id) {
-        return tipoMetodoDao.findById(id).orElse(null);
+    @Transactional(readOnly = true)
+    public TipoMetodo getTipoMetodo(TipoMetodo tipoMetodo) {
+        return tipoMetodoDao.findById(tipoMetodo.getTipoMetodoId()).orElse(null);
     }
 
     @Override
+    @Transactional
     public void save(TipoMetodo tipoMetodo) {
         tipoMetodoDao.save(tipoMetodo);
     }
 
     @Override
-    public void update(Long id, TipoMetodo tipoMetodo) {
-        tipoMetodo.setId(id);
-        tipoMetodoDao.save(tipoMetodo);
-    }
-
-    @Override
-    public void delete(Long id) {
-        tipoMetodoDao.deleteById(id);
+    @Transactional
+    public void delete(TipoMetodo tipoMetodo) {
+        tipoMetodoDao.delete(tipoMetodo);
     }
 }

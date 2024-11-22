@@ -8,9 +8,12 @@ import java.util.List;
  * @author Tom
  */
 public interface ProductoService {
+
     List<Producto> getProductos();
-    Producto getProductoById(Long id);
+
+    Producto getProducto(Producto producto);
+
     void save(Producto producto);
-    void update(Long id, Producto producto);
-    void delete(Long id);
+
+    void delete(Producto producto);
 }
