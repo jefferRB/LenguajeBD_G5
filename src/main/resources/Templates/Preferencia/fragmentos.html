@@ -1,0 +1,29 @@
+<section th:fragment="listadoPreferencias">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-9">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Cliente</th>
+                            <th>Preferencia</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="preferencia : ${preferencias}">
+                            <td>[[${preferencia.preferenciaId}]]</td>
+                            <td>[[${preferencia.clienteId}]]</td>
+                            <td>[[${preferencia.preferencia}]]</td>
+                            <td>
+                                <a th:href="@{/preferencia/modifica/}+${preferencia.preferenciaId}" class="btn btn-success">Editar</a>
+                                <a th:href="@{/preferencia/eliminar/}+${preferencia.preferenciaId}" class="btn btn-danger">Eliminar</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,10 +1,13 @@
 package com.example.demo.service;
 
+<<<<<<< Updated upstream
 
 import java.util.List;
 
+=======
+>>>>>>> Stashed changes
 import com.example.demo.domain.Cliente;
-
+import java.util.List;
 /**
  *
  * @author jeffer

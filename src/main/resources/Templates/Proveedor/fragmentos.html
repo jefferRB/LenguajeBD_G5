@@ -1,0 +1,35 @@
+<section th:fragment="listadoProveedores">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-9">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombre</th>
+                            <th>Primer Apellido</th>
+                            <th>Segundo Apellido</th>
+                            <th>Contacto</th>
+                            <th>Condiciones</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="proveedor : ${proveedores}">
+                            <td>[[${proveedor.proveedorId}]]</td>
+                            <td>[[${proveedor.nombre}]]</td>
+                            <td>[[${proveedor.primerApellido}]]</td>
+                            <td>[[${proveedor.segundoApellido}]]</td>
+                            <td>[[${proveedor.contacto}]]</td>
+                            <td>[[${proveedor.condicionesCompra}]]</td>
+                            <td>
+                                <a th:href="@{/proveedor/modifica/}+${proveedor.proveedorId}" class="btn btn-success">Editar</a>
+                                <a th:href="@{/proveedor/eliminar/}+${proveedor.proveedorId}" class="btn btn-danger">Eliminar</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>

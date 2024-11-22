@@ -1,50 +1,55 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-package  com.example.demo.conexion;
+package com.example.demo.conexion;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+<<<<<<< Updated upstream
 import javax.swing.JOptionPane;
 
 
+=======
+>>>>>>> Stashed changes
 
 public class Conexion {
 
     private static Connection conn = null;
+<<<<<<< Updated upstream
     private static String login = "JAVA";
     private static String clave = "JAVA";
     private static String url = "jdbc:oracle:thin:@localhost:1521:orcl1";
     
     public static Connection getConnection(){
+=======
+    private static final String LOGIN = "JAVA";
+    private static final String CLAVE = "JAVA";
+    private static final String URL = "jdbc:oracle:thin:@localhost:1521:orcl";
+
+    public static Connection getConnection() {
+>>>>>>> Stashed changes
         try {
-            Class.forName("oracle.jdbc.driver.OracleDriver");
-            conn = DriverManager.getConnection(url,login,clave);
+            Class.forName("oracle.jdbc.OracleDriver");
+            conn = DriverManager.getConnection(URL, LOGIN, CLAVE);
             conn.setAutoCommit(false);
-            if (conn != null){
-                System.out.println("Conexion Exitosa");
-            }else{
-                System.out.println("Conexion erronea");
-            }
+            System.out.println(conn != null ? "Conexion Exitosa" : "Conexion Erronea");
         } catch (ClassNotFoundException | SQLException e) {
-            JOptionPane.showMessageDialog(null, "Conexion fallida" + e.getMessage());
+            System.err.println("Conexion fallida: " + e.getMessage());
         }
         return conn;
     }
-    
-    public void deesconexion(){
-        try{
-            conn.close();
-        }catch(Exception e){
-            System.out.println("Error al desconectar" + e.getMessage());
+
+    public void desconexion() {
+        try {
+            if (conn != null && !conn.isClosed()) {
+                conn.close();
+                System.out.println("Desconexion Exitosa");
+            }
+        } catch (SQLException e) {
+            System.err.println("Error al desconectar: " + e.getMessage());
         }
     }
-    
-    public static void main(String[] args){
+
+    public static void main(String[] args) {
         Conexion c = new Conexion();
         c.getConnection();
     }
 }
- 

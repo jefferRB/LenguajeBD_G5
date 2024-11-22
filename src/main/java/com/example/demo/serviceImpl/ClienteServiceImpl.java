@@ -5,6 +5,7 @@ import com.example.demo.domain.Cliente;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.demo.service.ClienteService;
 import com.example.demo.dao.ClienteDao;
@@ -24,6 +25,7 @@ public class ClienteServiceImpl implements ClienteService {
     private Ora_Cliente clien = new Ora_Cliente();
 
     @Override
+    @Transactional(readOnly = true)
     public List<Cliente> getClientes() {
         var lista = clienteDao.findAll();
 
@@ -31,16 +33,19 @@ public class ClienteServiceImpl implements ClienteService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Cliente getCliente(Cliente cliente) {
         return clienteDao.findById(cliente.getClienteId()).orElse(null);
     }
 
     @Override
+    @Transactional
     public void save(Cliente cliente) {
         clienteDao.save(cliente);
     }
 
     @Override
+    @Transactional
     public void delete(Cliente cliente) {
         clienteDao.delete(cliente);
     }
