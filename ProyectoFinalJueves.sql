@@ -1,6 +1,4 @@
 ------
-
-
 CREATE TABLE CLIENTES(
 CLIENTE_ID NUMBER PRIMARY KEY,
 NOMBRE VARCHAR2(50),
@@ -123,51 +121,6 @@ CREATE TABLE PROVEEDORES (
     CONTACTO VARCHAR2(20),
     CONDICIONES_COMPRA VARCHAR2(200)
 );
-
--- TELEFONOS
-ALTER TABLE TELEFONOS DROP CONSTRAINT FK_CLIENTES;
-ALTER TABLE TELEFONOS ADD CONSTRAINT FK_CLIENTES FOREIGN KEY (CLIENTE_ID) REFERENCES CLIENTES(CLIENTE_ID) ON DELETE CASCADE;
-
--- PREFERENCIAS
-ALTER TABLE PREFERENCIAS DROP CONSTRAINT FK_PREFERENCIAS_CLIENTES;
-ALTER TABLE PREFERENCIAS ADD CONSTRAINT FK_PREFERENCIAS_CLIENTES FOREIGN KEY (CLIENTE_ID) REFERENCES CLIENTES(CLIENTE_ID) ON DELETE CASCADE;
-
--- PEDIDOS
-ALTER TABLE PEDIDOS DROP CONSTRAINT FK_PEDIDOS_CLIENTES;
-ALTER TABLE PEDIDOS ADD CONSTRAINT FK_PEDIDOS_CLIENTES FOREIGN KEY (CLIENTE_ID) REFERENCES CLIENTES(CLIENTE_ID) ON DELETE CASCADE;
-ALTER TABLE PEDIDOS DROP CONSTRAINT FK_METODOS_PAGO_ID;
-ALTER TABLE PEDIDOS ADD CONSTRAINT FK_METODOS_PAGO_ID FOREIGN KEY (METODO_PAGO_ID) REFERENCES METODO_PAGOS(METODO_PAGO_ID) ON DELETE CASCADE;
-
--- DETALLE_PEDIDOS
-ALTER TABLE DETALLE_PEDIDOS DROP CONSTRAINT FK_DETALLE_PEDIDOS_PEDIDOS;
-ALTER TABLE DETALLE_PEDIDOS ADD CONSTRAINT FK_DETALLE_PEDIDOS_PEDIDOS FOREIGN KEY (PEDIDO_ID) REFERENCES PEDIDOS(PEDIDO_ID) ON DELETE CASCADE;
-ALTER TABLE DETALLE_PEDIDOS DROP CONSTRAINT FK_DETALLE_PEDIDOS_PRODUCTOS;
-ALTER TABLE DETALLE_PEDIDOS ADD CONSTRAINT FK_DETALLE_PEDIDOS_PRODUCTOS FOREIGN KEY (PRODUCTO_ID) REFERENCES PRODUCTOS(PRODUCTO_ID) ON DELETE CASCADE;
-
--- INVENTARIOS
-ALTER TABLE INVENTARIOS DROP CONSTRAINT FK_PRODUCTO;
-ALTER TABLE INVENTARIOS ADD CONSTRAINT FK_PRODUCTO FOREIGN KEY (PRODUCTO_ID) REFERENCES PRODUCTOS(PRODUCTO_ID) ON DELETE CASCADE;
-
--- TIPOMETODOS
-ALTER TABLE TIPOMETODOS DROP CONSTRAINT FK_TIPOMETODOS_METODOPAGO;
-ALTER TABLE TIPOMETODOS ADD CONSTRAINT FK_TIPOMETODOS_METODOPAGO FOREIGN KEY (METODO_PAGO_ID) REFERENCES METODO_PAGOS(METODO_PAGO_ID) ON DELETE CASCADE;
-
--- PRECIOS
-ALTER TABLE PRECIOS DROP CONSTRAINT FK_PRECIO_PRODUCTOS;
-ALTER TABLE PRECIOS ADD CONSTRAINT FK_PRECIO_PRODUCTOS FOREIGN KEY (PRODUCTO_ID) REFERENCES PRODUCTOS(PRODUCTO_ID) ON DELETE CASCADE;
-
--- PRODUCTOS
-ALTER TABLE PRODUCTOS DROP CONSTRAINT FK_PRODUCTOS_CATEGORIA;
-ALTER TABLE PRODUCTOS ADD CONSTRAINT FK_PRODUCTOS_CATEGORIA FOREIGN KEY (CATEGORIA_ID) REFERENCES CATEGORIA_PRODUCTOS(CATEGORIA_ID) ON DELETE CASCADE;
-ALTER TABLE PRODUCTOS DROP CONSTRAINT FK_PRODUCTOS_PROVEEDOR;
-ALTER TABLE PRODUCTOS ADD CONSTRAINT FK_PRODUCTOS_PROVEEDOR FOREIGN KEY (PROVEEDOR_ID) REFERENCES PROVEEDORES(PROVEEDOR_ID) ON DELETE CASCADE;
-
--- DESCUENTOS
-ALTER TABLE DESCUENTOS DROP CONSTRAINT FK_DESCUENTOS_PRODUCTO;
-ALTER TABLE DESCUENTOS ADD CONSTRAINT FK_DESCUENTOS_PRODUCTO FOREIGN KEY (PRODUCTO_ID) REFERENCES PRODUCTOS(PRODUCTO_ID) ON DELETE CASCADE;
-
-
-
 
 
 INSERT INTO CLIENTES (CLIENTE_ID, NOMBRE, P_APELLIDO, S_APELLIDO, CORREO)
@@ -306,6 +259,11 @@ INSERT INTO PRODUCTOS (PRODUCTO_ID, CATEGORIA_ID, PROVEEDOR_ID, NOMBRE, STOCK, E
 VALUES (9, 9, 9, 'Sistema de Enfriamiento Corsair H100i', 20, 'Refrigeración líquida, 240mm, Compatible con Intel y AMD');
 INSERT INTO PRODUCTOS (PRODUCTO_ID, CATEGORIA_ID, PROVEEDOR_ID, NOMBRE, STOCK, ESPECIFICACIONES)
 VALUES (10, 10, 10, 'Auriculares Logitech G Pro X', 35, 'Auriculares Gaming, Micrófono desmontable, Sonido envolvente 7.1');
+INSERT INTO PRODUCTOS (PRODUCTO_ID, CATEGORIA_ID, PROVEEDOR_ID, NOMBRE, STOCK, ESPECIFICACIONES)
+VALUES (11, 2, 2, 'Laptop MSI', 15, 'Procesador AMD Ryzen 6, 16GB RAM, 512GB SSD');
+INSERT INTO PRODUCTOS (PRODUCTO_ID, CATEGORIA_ID, PROVEEDOR_ID, NOMBRE, STOCK, ESPECIFICACIONES)
+VALUES (12, 2, 2, 'Laptop ASUS ROG STRIX', 15, 'Procesador AMD Ryzen 6, 16GB RAM, 512GB SSD');
+
 
 INSERT INTO PROVEEDORES (PROVEEDOR_ID, NOMBRE, PRIMER_APELLIDO, SEGUNDO_APELLIDO, CONTACTO, CONDICIONES_COMPRA)
 VALUES (1, 'Juan', 'Pérez', 'Gómez', '51656511', 'Pago neto a 30 días, descuento por volumen de compra');
@@ -413,8 +371,48 @@ INSERT INTO INVENTARIOS (INVENTARIO_ID, PRODUCTO_ID, ULTIMA_ACTUALIZACION, CANTI
 VALUES (9, 9, TO_DATE('2024-11-09', 'YYYY-MM-DD'), 200); 
 INSERT INTO INVENTARIOS (INVENTARIO_ID, PRODUCTO_ID, ULTIMA_ACTUALIZACION, CANTIDAD_DISPONIBLE)
 VALUES (10, 10, TO_DATE('2024-11-10', 'YYYY-MM-DD'), 80);
+--------------------------------------------
+-- TELEFONOS
+ALTER TABLE TELEFONOS DROP CONSTRAINT FK_CLIENTES;
+ALTER TABLE TELEFONOS ADD CONSTRAINT FK_CLIENTES FOREIGN KEY (CLIENTE_ID) REFERENCES CLIENTES(CLIENTE_ID) ON DELETE CASCADE;
 
+-- PREFERENCIAS
+ALTER TABLE PREFERENCIAS DROP CONSTRAINT FK_PREFERENCIAS_CLIENTES;
+ALTER TABLE PREFERENCIAS ADD CONSTRAINT FK_PREFERENCIAS_CLIENTES FOREIGN KEY (CLIENTE_ID) REFERENCES CLIENTES(CLIENTE_ID) ON DELETE CASCADE;
 
+-- PEDIDOS
+ALTER TABLE PEDIDOS DROP CONSTRAINT FK_PEDIDOS_CLIENTES;
+ALTER TABLE PEDIDOS ADD CONSTRAINT FK_PEDIDOS_CLIENTES FOREIGN KEY (CLIENTE_ID) REFERENCES CLIENTES(CLIENTE_ID) ON DELETE CASCADE;
+ALTER TABLE PEDIDOS DROP CONSTRAINT FK_METODOS_PAGO_ID;
+ALTER TABLE PEDIDOS ADD CONSTRAINT FK_METODOS_PAGO_ID FOREIGN KEY (METODO_PAGO_ID) REFERENCES METODO_PAGOS(METODO_PAGO_ID) ON DELETE CASCADE;
+
+-- DETALLE_PEDIDOS
+ALTER TABLE DETALLE_PEDIDOS DROP CONSTRAINT FK_DETALLE_PEDIDOS_PEDIDOS;
+ALTER TABLE DETALLE_PEDIDOS ADD CONSTRAINT FK_DETALLE_PEDIDOS_PEDIDOS FOREIGN KEY (PEDIDO_ID) REFERENCES PEDIDOS(PEDIDO_ID) ON DELETE CASCADE;
+ALTER TABLE DETALLE_PEDIDOS DROP CONSTRAINT FK_DETALLE_PEDIDOS_PRODUCTOS;
+ALTER TABLE DETALLE_PEDIDOS ADD CONSTRAINT FK_DETALLE_PEDIDOS_PRODUCTOS FOREIGN KEY (PRODUCTO_ID) REFERENCES PRODUCTOS(PRODUCTO_ID) ON DELETE CASCADE;
+
+-- INVENTARIOS
+ALTER TABLE INVENTARIOS DROP CONSTRAINT FK_PRODUCTO;
+ALTER TABLE INVENTARIOS ADD CONSTRAINT FK_PRODUCTO FOREIGN KEY (PRODUCTO_ID) REFERENCES PRODUCTOS(PRODUCTO_ID) ON DELETE CASCADE;
+
+-- TIPOMETODOS
+ALTER TABLE TIPOMETODOS DROP CONSTRAINT FK_TIPOMETODOS_METODOPAGO;
+ALTER TABLE TIPOMETODOS ADD CONSTRAINT FK_TIPOMETODOS_METODOPAGO FOREIGN KEY (METODO_PAGO_ID) REFERENCES METODO_PAGOS(METODO_PAGO_ID) ON DELETE CASCADE;
+
+-- PRECIOS
+ALTER TABLE PRECIOS DROP CONSTRAINT FK_PRECIO_PRODUCTOS;
+ALTER TABLE PRECIOS ADD CONSTRAINT FK_PRECIO_PRODUCTOS FOREIGN KEY (PRODUCTO_ID) REFERENCES PRODUCTOS(PRODUCTO_ID) ON DELETE CASCADE;
+
+-- PRODUCTOS
+ALTER TABLE PRODUCTOS DROP CONSTRAINT FK_PRODUCTOS_CATEGORIA;
+ALTER TABLE PRODUCTOS ADD CONSTRAINT FK_PRODUCTOS_CATEGORIA FOREIGN KEY (CATEGORIA_ID) REFERENCES CATEGORIA_PRODUCTOS(CATEGORIA_ID) ON DELETE CASCADE;
+ALTER TABLE PRODUCTOS DROP CONSTRAINT FK_PRODUCTOS_PROVEEDOR;
+ALTER TABLE PRODUCTOS ADD CONSTRAINT FK_PRODUCTOS_PROVEEDOR FOREIGN KEY (PROVEEDOR_ID) REFERENCES PROVEEDORES(PROVEEDOR_ID) ON DELETE CASCADE;
+
+-- DESCUENTOS
+ALTER TABLE DESCUENTOS DROP CONSTRAINT FK_DESCUENTOS_PRODUCTO;
+ALTER TABLE DESCUENTOS ADD CONSTRAINT FK_DESCUENTOS_PRODUCTO FOREIGN KEY (PRODUCTO_ID) REFERENCES PRODUCTOS(PRODUCTO_ID) ON DELETE CASCADE;
 --------------------------------------------
 CREATE OR REPLACE VIEW PRODUCTOS_SIN_DESCUENTO AS
 SELECT p.PRODUCTO_ID, p.NOMBRE
@@ -423,6 +421,7 @@ LEFT JOIN DESCUENTOS d ON p.PRODUCTO_ID = d.PRODUCTO_ID
 WHERE d.PRODUCTO_ID IS NULL;
 
 SELECT * FROM PRODUCTOS_SIN_DESCUENTO;
+
 ---------------------------------------------
 CREATE OR REPLACE VIEW PEDIDOS_PENDIENTES AS
 SELECT PEDIDO_ID, CLIENTE_ID, FECHA_ESTIMACION
@@ -451,6 +450,54 @@ FROM PRODUCTOS p
 JOIN DESCUENTOS d ON p.PRODUCTO_ID = d.PRODUCTO_ID;
 
 SELECT * FROM PRODUCTOS_DESCUENTOS;
+
+--------
+
+--6 
+CREATE OR REPLACE VIEW PRODUCTOS_MAYOR_PRECIO AS
+SELECT p.PRODUCTO_ID,p.PRECIO,pro.NOMBRE
+FROM PRECIOS p
+JOIN PRODUCTOS pro ON p.PRODUCTO_ID = pro.PRODUCTO_ID
+WHERE p.PRECIO > 200;
+ 
+SELECT * FROM PRODUCTOS_MAYOR_PRECIO;
+ 
+--7 
+CREATE OR REPLACE VIEW PEDIDOS_ENVIADOS AS
+SELECT PEDIDO_ID,CLIENTE_ID,FECHA_ESTIMACION
+FROM PEDIDOS
+WHERE ESTADO_PEDIDO = 'Enviado';
+ 
+SELECT * FROM PEDIDOS_ENVIADOS;
+
+--8 
+CREATE OR REPLACE VIEW PEDIDOS_ENTREGADOS AS
+SELECT PEDIDO_ID,CLIENTE_ID,FECHA_ESTIMACION
+FROM PEDIDOS
+WHERE ESTADO_PEDIDO = 'Entregado';
+ 
+SELECT * FROM PEDIDOS_ENTREGADOS;
+
+
+--9
+CREATE OR REPLACE VIEW PRODUCTOS_SIN_STOCK AS
+SELECT PRODUCTO_ID,NOMBRE,STOCK
+FROM PRODUCTOS
+WHERE STOCK = 0;
+
+SELECT * FROM PRODUCTOS_SIN_STOCK;
+
+
+
+--10 
+CREATE OR REPLACE VIEW CLIENTES_SIN_PEDIDOS AS
+SELECT c.CLIENTE_ID,c.NOMBRE
+FROM CLIENTES c
+LEFT JOIN PEDIDOS p ON c.CLIENTE_ID = p.CLIENTE_ID
+WHERE p.CLIENTE_ID IS NULL;
+
+SELECT * FROM CLIENTES_SIN_PEDIDOS;
+
 
 --------------------------------------------------------------------------
 --Procesos almacenados
@@ -672,8 +719,208 @@ END;
 
 EXEC obtener_proveedor(10);
 
+---
 
---NUEVIOS 6 PROCEDIMIENTOS
+CREATE OR REPLACE PROCEDURE nuevo_producto
+(produc_id IN NUMBER,
+cate_id IN NUMBER,
+provee_id IN NUMBER,
+nombr IN VARCHAR2,
+stoc IN NUMBER,
+especifi IN VARCHAR2)AS
+BEGIN
+    INSERT INTO PRODUCTOS(PRODUCTO_ID,CATEGORIA_ID,PROVEEDOR_ID,NOMBRE,STOCK,
+    ESPECIFICACIONES)
+    VALUES(produc_id,cate_id,provee_id,nombr,stoc,especifi);
+    DBMS_OUTPUT.PUT_LINE('Nuevo producto agregado');
+    EXCEPTION 
+        WHEN NO_DATA_FOUND THEN 
+        DBMS_OUTPUT.PUT_LINE('Error al registrar el producto');
+END;
+
+EXEC nuevo_producto(11,1,5,'PC HP',800,'16GB RAM,1TB SSD')
+
+---
+
+CREATE OR REPLACE PROCEDURE nuevo_pedido
+(pedi_id IN NUMBER,
+metodopago_id IN NUMBER,
+client_id IN NUMBER,
+estadopedido IN VARCHAR2,
+fechaestimacion IN DATE,
+fechapedido IN DATE)AS
+BEGIN
+    INSERT INTO PEDIDOS(PEDIDO_ID,METODO_PAGO_ID,CLIENTE_ID,ESTADO_PEDIDO,
+    FECHA_ESTIMACION,FECHA_PEDIDO)
+    VALUES(pedi_id,metodopago_id,client_id,estadopedido,fechaestimacion,
+    fechapedido);
+    DBMS_OUTPUT.PUT_LINE('Nuevo pedido agregado');
+    EXCEPTION 
+        WHEN NO_DATA_FOUND THEN 
+        DBMS_OUTPUT.PUT_LINE('Error al registrar el producto');
+END;
+
+EXEC nuevo_pedido(5,2,5,'Enviado',TO_DATE('2024-11-19','YYYY-MM-DD'),SYSDATE);
+
+--
+
+CREATE OR REPLACE PROCEDURE aplicar_descuento
+(descuentoid IN NUMBER,
+productoid IN NUMBER,
+descuento IN NUMBER,
+fechaincio IN DATE,
+fechafin IN DATE)AS
+BEGIN
+    INSERT INTO DESCUENTOS(DESCUENTO_ID,PRODUCTO_ID,DESCUENTO,FECHA_INICIO,
+    FECHA_FIN)
+    VALUES(descuentoid,productoid,descuento,fechaincio,fechafin);
+    DBMS_OUTPUT.PUT_LINE('Nuevo descuento');
+    EXCEPTION 
+        WHEN NO_DATA_FOUND THEN 
+        DBMS_OUTPUT.PUT_LINE('Error al registrar el producto');
+END;
+
+EXEC aplicar_descuento(11,11,5,TO_DATE('2024-11-17','YYYY-MM-DD'),TO_DATE('2024-11-17','YYYY-MM-DD'));
+ COMMIT;
+ 
+---
+
+ CREATE OR REPLACE PROCEDURE actualizar_proveedor(
+    proveedorid IN NUMBER,
+    nombre_act IN VARCHAR2,
+    p_apellido IN VARCHAR2,
+    s_apellido IN VARCHAR2,
+    contacto_act IN VARCHAR2,
+    condiciones IN VARCHAR2
+) AS
+BEGIN
+    UPDATE PROVEEDORES
+    SET NOMBRE = nombre_act,
+        PRIMER_APELLIDO = p_apellido,
+        SEGUNDO_APELLIDO = s_apellido,
+        CONTACTO = contacto_act,
+        CONDICIONES_COMPRA = condiciones
+    WHERE PROVEEDOR_ID = proveedorid;
+    
+    COMMIT;
+    DBMS_OUTPUT.PUT_LINE('Proveedor actualizado con éxito');
+END;
+
+--Probar el proceso
+BEGIN
+    actualizar_proveedor(1, 'Carlos', 'Sánchez', 'Lopez', '555123456', 'Condiciones de pago mejoradas');
+END;
+
+--
+
+CREATE OR REPLACE PROCEDURE obtener_pedidos_rango_fechas(
+    fecha_inicio IN DATE,
+    fecha_fin IN DATE
+) AS
+BEGIN
+    FOR pedido IN (
+        SELECT PEDIDO_ID, CLIENTE_ID, ESTADO_PEDIDO, FECHA_PEDIDO
+        FROM PEDIDOS
+        WHERE FECHA_PEDIDO BETWEEN fecha_inicio AND fecha_fin
+    ) LOOP
+        DBMS_OUTPUT.PUT_LINE('Pedido Id: ' || pedido.PEDIDO_ID ||
+                             '-- Cliente Id: ' || pedido.CLIENTE_ID ||
+                             '-- Estado del pedido: ' || pedido.ESTADO_PEDIDO ||
+                             '-- Fecha del pedido: ' || pedido.FECHA_PEDIDO);
+    END LOOP;
+END;
+
+--Probar el proceso
+BEGIN
+    obtener_pedidos_rango_fechas(TO_DATE('2024-11-01', 'YYYY-MM-DD'), TO_DATE('2024-11-30', 'YYYY-MM-DD'));
+END;
+
+---
+
+CREATE OR REPLACE PROCEDURE actualizar_precio_producto(
+    productoId IN NUMBER,
+    nuevo_precio IN NUMBER
+) AS
+BEGIN
+    UPDATE PRECIOS
+    SET PRECIO = nuevo_precio
+    WHERE PRODUCTO_ID = productoId;
+    
+    COMMIT;
+    DBMS_OUTPUT.PUT_LINE('Precio actualizado con éxito');
+END;
+
+--Probar el proceso
+BEGIN
+    actualizar_precio_producto(2, 450.00);
+END;
+
+---
+CREATE OR REPLACE PROCEDURE contar_productos_categoria(
+    categoriaId IN NUMBER
+) AS
+    total_productos NUMBER;
+BEGIN
+    SELECT COUNT(*) INTO total_productos
+    FROM PRODUCTOS
+    WHERE CATEGORIA_ID = categoriaId;
+    
+    DBMS_OUTPUT.PUT_LINE('Total de productos en la categoría ' || categoriaId || ': ' || total_productos);
+END;
+
+--Probar el proceso
+BEGIN
+    contar_productos_categoria(3);
+END;
+
+---
+CREATE OR REPLACE PROCEDURE obtener_productos_descuento_vigente AS
+BEGIN
+    FOR producto IN (
+        SELECT p.PRODUCTO_ID, p.NOMBRE, d.DESCUENTO, d.FECHA_INICIO, d.FECHA_FIN
+        FROM PRODUCTOS p
+        JOIN DESCUENTOS d ON p.PRODUCTO_ID = d.PRODUCTO_ID
+        WHERE SYSDATE BETWEEN d.FECHA_INICIO AND d.FECHA_FIN
+    ) LOOP
+        DBMS_OUTPUT.PUT_LINE('Producto ID: ' || producto.PRODUCTO_ID ||
+                             ', Nombre: ' || producto.NOMBRE ||
+                             ', Descuento: ' || producto.DESCUENTO ||
+                             ', Fecha Inicio: ' || producto.FECHA_INICIO ||
+                             ', Fecha Fin: ' || producto.FECHA_FIN);
+        
+    END LOOP;
+END;
+
+--Probar el proceso
+BEGIN
+    obtener_productos_descuento_vigente;
+END;
+
+---
+
+CREATE OR REPLACE PROCEDURE actualizar_correo_cliente(
+    clienteId IN NUMBER,
+    nuevo_correo IN VARCHAR2
+) AS
+BEGIN
+    UPDATE CLIENTES
+    SET CORREO = nuevo_correo
+    WHERE CLIENTE_ID = clienteId;
+    
+    COMMIT;
+    DBMS_OUTPUT.PUT_LINE('Correo del cliente actualizada con éxito');
+EXCEPTION
+    WHEN NO_DATA_FOUND THEN 
+        DBMS_OUTPUT.PUT_LINE('Cliente no encontrado');
+END;
+
+--Probar el proceso
+BEGIN
+    actualizar_correo_cliente(3, 'carloshernandez@example.com');
+END;
+
+
+------
 CREATE OR REPLACE PROCEDURE contar_pedidos_activos AS
     pedidos_activos NUMBER;
 BEGIN
@@ -768,82 +1015,77 @@ BEGIN
 consultar_inventario_producto(1);
 END;
 
-CREATE OR REPLACE FUNCTION listar_clientes_top_pedidos(p_min_pedidos NUMBER)
-RETURN SYS_REFCURSOR
-AS
-    resultado SYS_REFCURSOR;
+--
+create or replace PROCEDURE actualizar_stock
+(produc_id IN NUMBER,can_disponible IN NUMBER)AS
 BEGIN
-    OPEN resultado FOR
-        SELECT c.CLIENTE_ID, c.NOMBRE, c.P_APELLIDO, COUNT(p.PEDIDO_ID) AS total_pedidos
-        FROM CLIENTES c
-        LEFT JOIN PEDIDOS p ON c.CLIENTE_ID = p.CLIENTE_ID
-        GROUP BY c.CLIENTE_ID, c.NOMBRE, c.P_APELLIDO
-        HAVING COUNT(p.PEDIDO_ID) > p_min_pedidos
-        ORDER BY total_pedidos DESC;
-    
-    RETURN resultado;
+    UPDATE INVENTARIOS
+    SET CANTIDAD_DISPONIBLE = can_disponible,
+        ULTIMA_ACTUALIZACION = SYSDATE
+    WHERE PRODUCTO_ID = produc_id;
+        DBMS_OUTPUT.PUT_LINE('Stock del producto: '|| produc_id ||' actualizado' );
+    EXCEPTION 
+        WHEN NO_DATA_FOUND THEN 
+                DBMS_OUTPUT.PUT_LINE('Producto no encontrado'); 
 END;
+--
+create or replace PROCEDURE obtener_cliente(provee_id IN NUMBER)AS
+    nombre VARCHAR2(50);
+    contacto VARCHAR2(100);
+    condicion VARCHAR2(100);
+BEGIN 
+    SELECT NOMBRE|| ' ' || PRIMER_APELLIDO || ' ' || SEGUNDO_APELLIDO,CONTACTO,CONDICIONES_COMPRA
+    INTO nombre,contacto,condicion
+    FROM PROVEEDORES
+    WHERE PROVEEDOR_ID = provee_id;
+    DBMS_OUTPUT.PUT_LINE('Proveedor: '|| nombre || ' contacto: ' || contacto || 'condicion: ' ||condicion);
 
-DECLARE
-   clientes_top SYS_REFCURSOR;
-   cliente_id CLIENTES.CLIENTE_ID%TYPE;
-   nombre CLIENTES.NOMBRE%TYPE;
-   apellido CLIENTES.P_APELLIDO%TYPE;
-   total_pedidos NUMBER;
-BEGIN
-   clientes_top := listar_clientes_top_pedidos(2); 
-   
-   LOOP
-      FETCH clientes_top INTO cliente_id, nombre, apellido, total_pedidos;
-      EXIT WHEN clientes_top%NOTFOUND;
-      
-      DBMS_OUTPUT.PUT_LINE('Cliente: ' || nombre || ' ' || apellido || 
-                            ', ID: ' || cliente_id || 
-                            ', Total Pedidos: ' || total_pedidos);
-   END LOOP;
-   
-   CLOSE clientes_top;
+    EXCEPTION 
+        WHEN NO_DATA_FOUND THEN 
+                DBMS_OUTPUT.PUT_LINE('Proveedor no encontrado');
 END;
 
 --
-CREATE OR REPLACE FUNCTION productos_por_agotarse(p_agotarse_stock NUMBER)
-RETURN SYS_REFCURSOR
-AS
-    c_productos_criticos SYS_REFCURSOR;
-BEGIN
-    OPEN c_productos_criticos FOR
-        SELECT p.PRODUCTO_ID, p.NOMBRE, p.STOCK, c.NOMBRE AS categoria
-        FROM PRODUCTOS p
-        JOIN CATEGORIA_PRODUCTOS c ON p.CATEGORIA_ID = c.CATEGORIA_ID
-        WHERE p.STOCK <= p_agotarse_stock
-        ORDER BY p.STOCK ASC;
-    
-    RETURN c_productos_criticos;
+create or replace PROCEDURE obtener_proveedor(provee_id IN NUMBER)AS
+    nombre VARCHAR2(50);
+    contacto VARCHAR2(100);
+    condicion VARCHAR2(100);
+BEGIN 
+    SELECT NOMBRE|| ' ' || PRIMER_APELLIDO || ' ' || SEGUNDO_APELLIDO,CONTACTO,CONDICIONES_COMPRA
+    INTO nombre,contacto,condicion
+    FROM PROVEEDORES
+    WHERE PROVEEDOR_ID = provee_id;
+    DBMS_OUTPUT.PUT_LINE('Proveedor: '|| nombre || ' contacto: ' || contacto || ' condicion: ' ||condicion);
+
+    EXCEPTION 
+        WHEN NO_DATA_FOUND THEN 
+                DBMS_OUTPUT.PUT_LINE('Proveedor no encontrado');
 END;
-
-DECLARE
-   c_productos_criticos SYS_REFCURSOR;
-   producto_id PRODUCTOS.PRODUCTO_ID%TYPE;
-   nombre PRODUCTOS.NOMBRE%TYPE;
-   stock PRODUCTOS.STOCK%TYPE;
-   categoria CATEGORIA_PRODUCTOS.NOMBRE%TYPE;
+--
+create or replace FUNCTION descuento_total_producto(
+    productoId IN NUMBER
+) RETURN NUMBER AS
+    c_descuentos SYS_REFCURSOR;  
+    total_descuento NUMBER := 0;  
+    descuento NUMBER; 
 BEGIN
-   c_productos_criticos := productos_por_agotarse(40); 
-   
-   LOOP
-      FETCH c_productos_criticos INTO producto_id, nombre, stock, categoria;
-      EXIT WHEN c_productos_criticos%NOTFOUND;
-      
-      DBMS_OUTPUT.PUT_LINE('Producto: ' || nombre || 
-                            ', ID: ' || producto_id || 
-                            ', Stock: ' || stock || 
-                            ', Categoría: ' || categoria);
-   END LOOP;
-   
-   CLOSE c_productos_criticos;
+
+    OPEN c_descuentos FOR
+        SELECT DESCUENTO
+        FROM DESCUENTOS
+        WHERE PRODUCTO_ID = productoId
+          AND SYSDATE BETWEEN FECHA_INICIO AND FECHA_FIN;
+
+    LOOP
+        FETCH c_descuentos INTO descuento;  
+        EXIT WHEN c_descuentos%NOTFOUND;         
+        total_descuento := total_descuento + descuento;
+    END LOOP;  
+    CLOSE c_descuentos;
+
+    RETURN total_descuento;
 END;
-
-
+--
 CREATE OR REPLACE FUNCTION total_productos_pedido(
     pedidoId IN NUMBER
 ) RETURN NUMBER AS
@@ -1087,3 +1329,867 @@ BEGIN
     DBMS_OUTPUT.PUT_LINE('Total de categorías con productos: ' || total);
 END;
 
+----
+--Obtener el precio de un producto
+CREATE OR REPLACE FUNCTION obtener_precio_total_pedido(
+    p_pedido_id IN NUMBER
+) RETURN NUMBER AS
+    CURSOR c_productos IS
+        SELECT dp.CANTIDAD, pr.PRECIO  
+        FROM DETALLE_PEDIDOS dp
+        JOIN PRECIOS pr ON dp.PRODUCTO_ID = pr.PRODUCTO_ID  
+        WHERE dp.PEDIDO_ID = p_pedido_id;
+
+    precio_total NUMBER := 0;
+    precio_producto NUMBER;
+    cantidad NUMBER;
+BEGIN
+    
+    OPEN c_productos;
+    
+    LOOP
+        FETCH c_productos INTO cantidad, precio_producto;
+        EXIT WHEN c_productos%NOTFOUND;  
+
+       
+        precio_total := precio_total + (cantidad * precio_producto);
+    END LOOP;
+    CLOSE c_productos;
+
+    RETURN precio_total;
+END;
+
+DECLARE
+    precio_total NUMBER;
+BEGIN   
+    precio_total := obtener_precio_total_pedido(2);  
+    DBMS_OUTPUT.PUT_LINE('El precio total del pedido es: ' || precio_total);
+END;
+
+---
+
+
+CREATE OR REPLACE FUNCTION obtener_precio_total_pedido(
+    p_pedido_id IN NUMBER
+) RETURN NUMBER AS
+    CURSOR c_productos IS
+        SELECT dp.CANTIDAD, pr.PRECIO  
+        FROM DETALLE_PEDIDOS dp
+        JOIN PRECIOS pr ON dp.PRODUCTO_ID = pr.PRODUCTO_ID  
+        WHERE dp.PEDIDO_ID = p_pedido_id;
+
+    precio_total NUMBER := 0;
+    precio_producto NUMBER;
+    cantidad NUMBER;
+BEGIN
+   
+    OPEN c_productos;
+
+    LOOP
+        FETCH c_productos INTO cantidad, precio_producto;
+        EXIT WHEN c_productos%NOTFOUND;  
+
+       
+        precio_total := precio_total + (cantidad * precio_producto);
+    END LOOP;
+    CLOSE c_productos;
+
+    RETURN precio_total;
+END;
+
+DECLARE
+    precio_total NUMBER;
+BEGIN   
+    precio_total := obtener_precio_total_pedido(2);  
+    DBMS_OUTPUT.PUT_LINE('El precio total del pedido es: ' || precio_total);
+END;
+
+--
+--Para ver el promedio de los clientes
+CREATE OR REPLACE FUNCTION promedio_productos_cliente(
+    clienteId IN NUMBER
+) RETURN NUMBER AS
+    CURSOR c_productos IS
+        SELECT dp.CANTIDAD
+        FROM DETALLE_PEDIDOS dp
+        JOIN PEDIDOS p ON dp.PEDIDO_ID = p.PEDIDO_ID
+        WHERE p.CLIENTE_ID = clienteId;
+
+    total_productos NUMBER := 0;
+    total_pedidos NUMBER := 0;
+    cantidad NUMBER;
+    promedio NUMBER;
+BEGIN
+    OPEN c_productos; 
+    LOOP
+        FETCH c_productos INTO cantidad;
+        EXIT WHEN c_productos%NOTFOUND;
+        
+        total_productos := total_productos + cantidad;
+        total_pedidos := total_pedidos + 1;
+    END LOOP; 
+    
+    CLOSE c_productos;
+
+    IF total_pedidos > 0 THEN
+        promedio := total_productos / total_pedidos;
+        RETURN FLOOR(promedio);
+    ELSE
+        RETURN 0;
+    END IF;
+END;
+
+DECLARE
+    v_promedio NUMBER;
+BEGIN
+    v_promedio := promedio_productos_cliente(1);  
+    DBMS_OUTPUT.PUT_LINE('El promedio de productos por pedido del cliente es: ' || v_promedio);
+END;
+---
+--Para poder ver la cantidad de stock de un producto
+CREATE OR REPLACE FUNCTION cantidad_stock_producto(
+    productoId IN NUMBER
+) RETURN NUMBER AS
+    c_inventarios SYS_REFCURSOR;
+    total_stock NUMBER := 0;
+    stock NUMBER;
+BEGIN
+    OPEN c_inventarios FOR
+        SELECT CANTIDAD_DISPONIBLE
+        FROM INVENTARIOS
+        WHERE PRODUCTO_ID = productoId;
+
+    LOOP
+        FETCH c_inventarios INTO stock;
+        EXIT WHEN c_inventarios%NOTFOUND;
+        total_stock := total_stock + stock;
+    END LOOP;
+
+    CLOSE c_inventarios;
+
+    RETURN total_stock;
+END;
+
+DECLARE
+    stock_total NUMBER;
+BEGIN
+    stock_total := cantidad_stock_producto(1);  
+    DBMS_OUTPUT.PUT_LINE('El stock total del producto es: ' || stock_total);
+END;
+---
+--Proveedor con mayor numero de productos
+CREATE OR REPLACE FUNCTION proveedor_con_mayor_stock
+    RETURN VARCHAR2 AS
+    c_proveedores SYS_REFCURSOR;
+    proveedorId NUMBER;
+    nombre_proveedor VARCHAR2(100);
+    max_stock NUMBER := 0;
+    stock_count NUMBER;
+BEGIN
+    OPEN c_proveedores FOR
+        SELECT PROVEEDOR_ID, NOMBRE
+        FROM PROVEEDORES;
+    LOOP
+        FETCH c_proveedores INTO proveedorId, nombre_proveedor;
+        EXIT WHEN c_proveedores%NOTFOUND;
+        
+        SELECT NVL(SUM(STOCK), 0) INTO stock_count
+        FROM PRODUCTOS
+        WHERE PROVEEDOR_ID = proveedorId;
+        
+        IF stock_count > max_stock THEN
+            max_stock := stock_count;
+            
+            nombre_proveedor := nombre_proveedor;
+        END IF;
+    END LOOP;
+ 
+    CLOSE c_proveedores;
+   
+    RETURN nombre_proveedor;
+END;
+
+DECLARE
+    v_proveedor_con_mas_productos VARCHAR2(100);
+BEGIN
+    v_proveedor_con_mas_productos := proveedor_con_mayor_stock;
+    DBMS_OUTPUT.PUT_LINE('El proveedor con más productos es: ' || v_proveedor_con_mas_productos);
+END;
+---
+----Si un producto tiene descuento
+CREATE OR REPLACE FUNCTION tiene_descuento_vigente(
+    productoId IN NUMBER
+) RETURN BOOLEAN AS
+    c_descuento SYS_REFCURSOR;
+    descuento NUMBER := 0; 
+BEGIN
+    OPEN c_descuento FOR
+        SELECT COUNT(*)
+        FROM DESCUENTOS
+        WHERE PRODUCTO_ID = productoId
+          AND SYSDATE BETWEEN FECHA_INICIO AND FECHA_FIN;
+
+    FETCH c_descuento INTO descuento;
+
+    CLOSE c_descuento;
+
+    IF descuento > 0 THEN
+        RETURN TRUE;  
+    ELSE
+        RETURN FALSE;  
+    END IF;
+END;
+
+
+DECLARE
+    descuento BOOLEAN;
+BEGIN
+    descuento := tiene_descuento_vigente(1);  
+    IF descuento THEN
+        DBMS_OUTPUT.PUT_LINE('El producto tiene un descuento vigente.');
+    ELSE
+        DBMS_OUTPUT.PUT_LINE('El producto no tiene descuento vigente.');
+    END IF;
+END;
+--
+CREATE OR REPLACE FUNCTION total_ventas_cliente(
+    clienteId IN NUMBER
+) RETURN NUMBER AS
+    c_pedidos SYS_REFCURSOR;
+    total_ventas NUMBER := 0;
+    monto NUMBER;
+BEGIN
+    OPEN c_pedidos FOR
+        SELECT SUM(dp.CANTIDAD * pr.PRECIO)  
+        FROM DETALLE_PEDIDOS dp
+        JOIN PEDIDOS p ON dp.PEDIDO_ID = p.PEDIDO_ID
+        JOIN PRECIOS pr ON dp.PRODUCTO_ID = pr.PRODUCTO_ID
+        WHERE p.CLIENTE_ID = clienteId;
+
+    FETCH c_pedidos INTO monto;
+
+    IF c_pedidos%FOUND THEN
+        total_ventas := FLOOR(monto);
+    ELSE
+        total_ventas := 0;
+    END IF;
+
+    CLOSE c_pedidos;
+
+    RETURN total_ventas;
+END;
+
+DECLARE
+    total_ventas NUMBER;
+BEGIN
+    total_ventas := total_ventas_cliente(1);  
+    DBMS_OUTPUT.PUT_LINE('Total ventas del cliente: ' || total_ventas);
+END;
+
+--TRIGGERS
+
+CREATE OR REPLACE TRIGGER limitaciones_inventario_stock
+    BEFORE
+    UPDATE OF CANTIDAD_DISPONIBLE
+    ON INVENTARIOS
+    FOR EACH ROW
+BEGIN
+    IF :NEW.CANTIDAD_DISPONIBLE < 0 THEN
+        RAISE_APPLICATION_ERROR(-20100, 'Error, La cantidad en inventario no puede ser negativa');
+    END IF;
+    
+    IF :NEW.CANTIDAD_DISPONIBLE > 1000 THEN
+        RAISE_APPLICATION_ERROR(-20101, 'Error, La cantidad en inventario no puede superar los 1000 productos');
+    END IF;
+END;
+
+----------
+
+CREATE OR REPLACE TRIGGER fechas_descuento_por_defecto
+    BEFORE INSERT ON DESCUENTOS
+    FOR EACH ROW
+BEGIN
+    :NEW.FECHA_INICIO := SYSDATE;
+    :NEW.FECHA_FIN := ADD_MONTHS(SYSDATE, 1);
+END;
+
+-----------
+
+CREATE OR REPLACE TRIGGER telefonos_limite_por_cliente
+    BEFORE INSERT ON TELEFONOS
+    FOR EACH ROW
+DECLARE
+    total_telefonos NUMBER;
+BEGIN
+    SELECT COUNT(*) INTO total_telefonos
+    FROM TELEFONOS
+    WHERE CLIENTE_ID = :NEW.CLIENTE_ID;
+
+    IF total_telefonos >= 2 THEN
+        RAISE_APPLICATION_ERROR(-20001, 'Máximo 2 teléfonos por cliente');
+    END IF;
+END;
+
+
+CREATE OR REPLACE PACKAGE paquete_pedidos AS
+    FUNCTION total_productos_pedido(pedidoId NUMBER) RETURN NUMBER;
+    FUNCTION pedidos_entregados_cliente(clienteId NUMBER) RETURN NUMBER;
+    PROCEDURE actualizar_estado_pedido(p_pedido_id NUMBER, p_nuevo_estado VARCHAR2);
+END paquete_pedidos;
+
+CREATE OR REPLACE PACKAGE BODY paquete_pedidos AS
+    FUNCTION total_productos_pedido(pedidoId NUMBER) RETURN NUMBER IS
+        c_productos SYS_REFCURSOR;
+        total_productos NUMBER := 0;
+        cantidad NUMBER;
+    BEGIN
+        OPEN c_productos FOR
+            SELECT CANTIDAD
+            FROM DETALLE_PEDIDOS
+            WHERE PEDIDO_ID = pedidoId;
+
+        LOOP
+            FETCH c_productos INTO cantidad;
+            EXIT WHEN c_productos%NOTFOUND;
+            total_productos := total_productos + cantidad;
+        END LOOP;
+
+        CLOSE c_productos;
+        RETURN total_productos;
+    END total_productos_pedido;
+
+    FUNCTION pedidos_entregados_cliente(clienteId NUMBER) RETURN NUMBER IS
+        total_entregados NUMBER := 0;
+    BEGIN
+        SELECT COUNT(*) INTO total_entregados
+        FROM PEDIDOS
+        WHERE CLIENTE_ID = clienteId AND ESTADO_PEDIDO = 'Entregado';
+
+        RETURN total_entregados;
+    END pedidos_entregados_cliente;
+
+    PROCEDURE actualizar_estado_pedido(p_pedido_id NUMBER, p_nuevo_estado VARCHAR2) IS
+    BEGIN
+        UPDATE PEDIDOS
+        SET ESTADO_PEDIDO = p_nuevo_estado
+        WHERE PEDIDO_ID = p_pedido_id;
+    END actualizar_estado_pedido;
+END paquete_pedidos;
+
+---
+CREATE TABLE BITACORA_INGRESO_SALIDA(
+ID_BITACORA NUMBER GENERATED ALWAYS AS IDENTITY,
+INGRESO NUMBER,
+SALIDA NUMBER
+);
+
+INSERT INTO BITACORA_INGRESO_SALIDA(INGRESO,SALIDA)
+VALUES(0,0);
+
+
+CREATE OR REPLACE TRIGGER HR_LOGIN_TRG
+AFTER LOGON
+ON JAVA.SCHEMA
+DECLARE 
+    cantidad_ingresos NUMBER;
+BEGIN 
+    SELECT INGRESO + 1 INTO cantidad_ingresos
+    FROM BITACORA_INGRESO_SALIDA;
+    
+    UPDATE BITACORA_INGRESO_SALIDA
+    SET INGRESO = cantidad_ingresos;
+    
+    COMMIT;
+END;
+
+CREATE OR REPLACE TRIGGER HR_LOGOFF_TRG
+BEFORE LOGOFF
+ON JAVA.SCHEMA
+DECLARE 
+    cantidad_salidas NUMBER;
+BEGIN 
+    SELECT SALIDA + 1 INTO cantidad_salidas
+    FROM BITACORA_INGRESO_SALIDA;
+    
+    UPDATE BITACORA_INGRESO_SALIDA
+    SET SALIDA = cantidad_salidas;
+    
+    COMMIT;
+END;
+
+
+--------------------------------
+
+
+CREATE OR REPLACE PACKAGE paquete_categorias AS
+    FUNCTION obtener_productos_categoria(p_categoria_id NUMBER) RETURN SYS_REFCURSOR;
+    PROCEDURE registrar_nueva_categoria(p_nombre VARCHAR2, p_descripcion VARCHAR2);
+END paquete_categorias;
+
+
+CREATE OR REPLACE PACKAGE BODY paquete_categorias AS
+    FUNCTION obtener_productos_categoria(p_categoria_id NUMBER) RETURN SYS_REFCURSOR IS
+        v_cursor SYS_REFCURSOR;
+    BEGIN
+        OPEN v_cursor FOR
+            SELECT p.PRODUCTO_ID, p.NOMBRE
+            FROM PRODUCTOS p
+            WHERE p.CATEGORIA_ID = p_categoria_id;
+
+        RETURN v_cursor;
+    END obtener_productos_categoria;
+
+    PROCEDURE registrar_nueva_categoria(p_nombre VARCHAR2, p_descripcion VARCHAR2) IS
+    BEGIN
+        INSERT INTO CATEGORIA_PRODUCTOS(CATEGORIA_ID, NOMBRE, DESCRIPCION)
+        VALUES((SELECT NVL(MAX(CATEGORIA_ID), 0) + 1 FROM CATEGORIA_PRODUCTOS), p_nombre, p_descripcion);
+    END registrar_nueva_categoria;
+END paquete_categorias;
+
+--
+
+CREATE OR REPLACE PACKAGE paquete_clientes AS
+    PROCEDURE registrar_nuevo_cliente(p_nombre VARCHAR2, p_primer_apellido VARCHAR2, p_segundo_apellido VARCHAR2, p_correo VARCHAR2);
+    PROCEDURE actualizar_telefono(p_cliente_id NUMBER, p_telefono VARCHAR2);
+    FUNCTION clientes_multiples_pedidos(p_cliente_id NUMBER) RETURN BOOLEAN;
+END paquete_clientes;
+
+
+CREATE OR REPLACE PACKAGE BODY paquete_clientes AS
+    PROCEDURE registrar_nuevo_cliente(p_nombre VARCHAR2, p_primer_apellido VARCHAR2, p_segundo_apellido VARCHAR2, p_correo VARCHAR2) IS
+    BEGIN
+        INSERT INTO CLIENTES(CLIENTE_ID, NOMBRE, P_APELLIDO, S_APELLIDO, CORREO)
+        VALUES((SELECT NVL(MAX(CLIENTE_ID), 0) + 1 FROM CLIENTES), p_nombre, p_primer_apellido, p_segundo_apellido, p_correo);
+    END registrar_nuevo_cliente;
+
+    PROCEDURE actualizar_telefono(p_cliente_id NUMBER, p_telefono VARCHAR2) IS
+    BEGIN
+        UPDATE TELEFONOS
+        SET TELEFONO = p_telefono
+        WHERE CLIENTE_ID = p_cliente_id;
+    END actualizar_telefono;
+
+    FUNCTION clientes_multiples_pedidos(p_cliente_id NUMBER) RETURN BOOLEAN IS
+        v_count NUMBER := 0;
+    BEGIN
+        SELECT COUNT(*) INTO v_count
+        FROM PEDIDOS
+        WHERE CLIENTE_ID = p_cliente_id;
+
+        RETURN v_count > 1;
+    END clientes_multiples_pedidos;
+END paquete_clientes;
+
+--
+
+CREATE OR REPLACE PACKAGE paquete_inventario AS
+    PROCEDURE verificar_stock_producto(
+        p_producto_id IN NUMBER, 
+        p_cantidad IN NUMBER, 
+        p_suficiente OUT BOOLEAN
+    );
+    PROCEDURE actualizar_inventario(
+        p_producto_id IN NUMBER, 
+        p_cantidad IN NUMBER, 
+        p_operacion VARCHAR2
+    );
+END paquete_inventario;
+
+
+CREATE OR REPLACE PACKAGE BODY paquete_inventario AS
+    PROCEDURE verificar_stock_producto(
+        p_producto_id IN NUMBER, 
+        p_cantidad IN NUMBER, 
+        p_suficiente OUT BOOLEAN
+    ) IS
+        v_stock NUMBER;
+    BEGIN
+        SELECT CANTIDAD_DISPONIBLE INTO v_stock
+        FROM INVENTARIOS
+        WHERE PRODUCTO_ID = p_producto_id;
+        
+        p_suficiente := v_stock >= p_cantidad;
+        
+        EXCEPTION
+            WHEN NO_DATA_FOUND THEN
+                p_suficiente := FALSE;
+    END verificar_stock_producto;
+
+    PROCEDURE actualizar_inventario(
+        p_producto_id IN NUMBER, 
+        p_cantidad IN NUMBER, 
+        p_operacion VARCHAR2
+    ) IS
+        v_cantidad_actual NUMBER;
+    BEGIN
+        SELECT CANTIDAD_DISPONIBLE INTO v_cantidad_actual
+        FROM INVENTARIOS
+        WHERE PRODUCTO_ID = p_producto_id;
+        
+        IF p_operacion = 'SUMAR' THEN
+            UPDATE INVENTARIOS
+            SET CANTIDAD_DISPONIBLE = v_cantidad_actual + p_cantidad,
+                ULTIMA_ACTUALIZACION = SYSDATE
+            WHERE PRODUCTO_ID = p_producto_id;
+        ELSIF p_operacion = 'RESTAR' THEN
+            IF v_cantidad_actual >= p_cantidad THEN
+                UPDATE INVENTARIOS
+                SET CANTIDAD_DISPONIBLE = v_cantidad_actual - p_cantidad,
+                    ULTIMA_ACTUALIZACION = SYSDATE
+                WHERE PRODUCTO_ID = p_producto_id;
+            ELSE
+                RAISE_APPLICATION_ERROR(-21000, 'Stock insuficiente');
+            END IF;
+        END IF;
+    END actualizar_inventario;
+END paquete_inventario;
+
+--
+
+CREATE OR REPLACE PACKAGE paquete_proveedores AS
+    PROCEDURE registrar_proveedor(
+        p_nombre IN VARCHAR2,
+        p_primer_apellido IN VARCHAR2,
+        p_segundo_apellido IN VARCHAR2,
+        p_contacto IN VARCHAR2,
+        p_condiciones_compra IN VARCHAR2
+    );
+    FUNCTION obtener_productos_proveedor(p_proveedor_id IN NUMBER) RETURN SYS_REFCURSOR;
+END paquete_proveedores;
+
+CREATE OR REPLACE PACKAGE BODY paquete_proveedores AS
+    PROCEDURE registrar_proveedor(
+        p_nombre IN VARCHAR2,
+        p_primer_apellido IN VARCHAR2,
+        p_segundo_apellido IN VARCHAR2,
+        p_contacto IN VARCHAR2,
+        p_condiciones_compra IN VARCHAR2
+    ) IS
+    BEGIN
+        INSERT INTO PROVEEDORES(
+            PROVEEDOR_ID,
+            NOMBRE,
+            PRIMER_APELLIDO,
+            SEGUNDO_APELLIDO,
+            CONTACTO,
+            CONDICIONES_COMPRA
+        )
+        VALUES(
+            (SELECT NVL(MAX(PROVEEDOR_ID), 0) + 1 FROM PROVEEDORES),
+            p_nombre,
+            p_primer_apellido,
+            p_segundo_apellido,
+            p_contacto,
+            p_condiciones_compra
+        );
+    END registrar_proveedor;
+
+    FUNCTION obtener_productos_proveedor(p_proveedor_id IN NUMBER) RETURN SYS_REFCURSOR IS
+        v_cursor SYS_REFCURSOR;
+    BEGIN
+        OPEN v_cursor FOR
+            SELECT 
+                p.PRODUCTO_ID,
+                p.NOMBRE,
+                p.STOCK,
+                p.ESPECIFICACIONES,
+                cp.NOMBRE AS CATEGORIA_NOMBRE
+            FROM PRODUCTOS p
+            JOIN CATEGORIA_PRODUCTOS cp ON p.CATEGORIA_ID = cp.CATEGORIA_ID
+            WHERE p.PROVEEDOR_ID = p_proveedor_id;
+
+        RETURN v_cursor;
+    END obtener_productos_proveedor;
+END paquete_proveedores;
+
+
+------------------------
+CREATE OR REPLACE PACKAGE paquete_productos AS
+    PROCEDURE obtener_productos_categoria(p_categoria_id IN NUMBER);
+    PROCEDURE productos_rango_precio(p_precio_min IN NUMBER, p_precio_max IN NUMBER);
+    FUNCTION cantidad_stock_producto(productoId IN NUMBER) RETURN NUMBER;
+    FUNCTION tiene_descuento_vigente(productoId IN NUMBER) RETURN BOOLEAN;
+END paquete_productos;
+
+
+
+CREATE OR REPLACE PACKAGE BODY paquete_productos AS
+
+    PROCEDURE obtener_productos_categoria(p_categoria_id IN NUMBER) AS
+    BEGIN
+        FOR producto IN (
+            SELECT * FROM PRODUCTOS 
+            WHERE CATEGORIA_ID = p_categoria_id
+        ) LOOP
+            DBMS_OUTPUT.PUT_LINE('Producto ID: ' || producto.PRODUCTO_ID ||
+                                 ', Nombre: ' || producto.NOMBRE ||
+                                 ', Stock: ' || producto.STOCK);
+        END LOOP;
+    END obtener_productos_categoria;
+
+    PROCEDURE productos_rango_precio(p_precio_min IN NUMBER, p_precio_max IN NUMBER) AS
+    BEGIN
+        FOR producto IN (
+            SELECT p.PRODUCTO_ID, p.NOMBRE, pr.PRECIO
+            FROM PRODUCTOS p
+            JOIN PRECIOS pr ON p.PRODUCTO_ID = pr.PRODUCTO_ID
+            WHERE pr.PRECIO BETWEEN p_precio_min AND p_precio_max
+        ) LOOP
+            DBMS_OUTPUT.PUT_LINE('Producto ID: ' || producto.PRODUCTO_ID ||
+                                 ', Nombre: ' || producto.NOMBRE ||
+                                 ', Precio: ' || producto.PRECIO);
+        END LOOP;
+    END productos_rango_precio;
+
+    FUNCTION cantidad_stock_producto(productoId IN NUMBER) RETURN NUMBER AS
+        c_inventarios SYS_REFCURSOR;
+        total_stock NUMBER := 0;
+        stock NUMBER;
+    BEGIN
+        OPEN c_inventarios FOR
+            SELECT CANTIDAD_DISPONIBLE
+            FROM INVENTARIOS
+            WHERE PRODUCTO_ID = productoId;
+        LOOP
+            FETCH c_inventarios INTO stock;
+            EXIT WHEN c_inventarios%NOTFOUND;
+            total_stock := total_stock + stock;
+        END LOOP;
+        CLOSE c_inventarios;
+        RETURN total_stock;
+    END cantidad_stock_producto;
+
+    FUNCTION tiene_descuento_vigente(productoId IN NUMBER) RETURN BOOLEAN AS
+        c_descuento SYS_REFCURSOR;
+        descuento NUMBER := 0; 
+    BEGIN
+        OPEN c_descuento FOR
+            SELECT COUNT(*)
+            FROM DESCUENTOS
+            WHERE PRODUCTO_ID = productoId
+              AND SYSDATE BETWEEN FECHA_INICIO AND FECHA_FIN;
+        FETCH c_descuento INTO descuento;
+        CLOSE c_descuento;
+
+        IF descuento > 0 THEN
+            RETURN TRUE;  
+        ELSE
+            RETURN FALSE;  
+        END IF;
+    END tiene_descuento_vigente;
+
+END paquete_productos;
+
+------------------------------
+
+CREATE OR REPLACE PACKAGE paquete_gestion_pedidos AS
+    PROCEDURE crear_pedido(p_pedido_id IN NUMBER, p_cliente_id IN NUMBER, p_fecha_pedido IN DATE, p_estado_pedido IN VARCHAR2);
+    PROCEDURE actualizar_estado_pedido(p_pedido_id IN NUMBER, p_nuevo_estado IN VARCHAR2);
+    FUNCTION obtener_total_pedido(p_pedido_id IN NUMBER) RETURN NUMBER;
+END paquete_gestion_pedidos;
+CREATE OR REPLACE PACKAGE BODY paquete_gestion_pedidos AS
+
+    PROCEDURE crear_pedido(p_pedido_id IN NUMBER, p_cliente_id IN NUMBER, p_fecha_pedido IN DATE, p_estado_pedido IN VARCHAR2) AS
+    BEGIN
+        INSERT INTO PEDIDOS(PEDIDO_ID, CLIENTE_ID, FECHA_PEDIDO, ESTADO_PEDIDO)
+        VALUES(p_pedido_id, p_cliente_id, p_fecha_pedido, p_estado_pedido);
+        COMMIT;
+        DBMS_OUTPUT.PUT_LINE('Pedido creado con éxito');
+    END crear_pedido;
+
+    PROCEDURE actualizar_estado_pedido(p_pedido_id IN NUMBER, p_nuevo_estado IN VARCHAR2) AS
+    BEGIN
+        UPDATE PEDIDOS
+        SET ESTADO_PEDIDO = p_nuevo_estado
+        WHERE PEDIDO_ID = p_pedido_id;
+        COMMIT;
+        DBMS_OUTPUT.PUT_LINE('Estado del pedido actualizado');
+    END actualizar_estado_pedido;
+
+    PROCEDURE obtener_pedido(p_pedido_id IN NUMBER) AS
+    BEGIN
+        FOR pedido IN (
+            SELECT * FROM PEDIDOS WHERE PEDIDO_ID = p_pedido_id
+        ) LOOP
+            DBMS_OUTPUT.PUT_LINE('Pedido ID: ' || pedido.PEDIDO_ID ||
+                                 '-- Cliente ID: ' || pedido.CLIENTE_ID ||
+                                 '-- Fecha Pedido: ' || pedido.FECHA_PEDIDO ||
+                                 '-- Estado Pedido: ' || pedido.ESTADO_PEDIDO);
+        END LOOP;
+    END obtener_pedido;
+
+  
+    FUNCTION obtener_total_pedido(p_pedido_id IN NUMBER) RETURN NUMBER AS
+    total NUMBER := 0;
+    BEGIN
+        SELECT SUM(dp.CANTIDAD * pr.PRECIO) INTO total
+        FROM DETALLE_PEDIDOS dp
+        JOIN PRECIOS pr ON dp.PRODUCTO_ID = pr.PRODUCTO_ID
+        WHERE dp.PEDIDO_ID = p_pedido_id;
+        RETURN total;
+    END obtener_total_pedido;
+END paquete_gestion_pedidos;
+
+-----
+
+CREATE OR REPLACE PACKAGE paquete_informes_ventas AS
+    PROCEDURE ventas_por_cliente(p_cliente_id IN NUMBER);
+    PROCEDURE ventas_por_producto(p_producto_id IN NUMBER);
+    PROCEDURE ventas_por_periodo(p_fecha_inicio IN DATE, p_fecha_fin IN DATE);
+    PROCEDURE ventas_totales;
+END paquete_informes_ventas;
+CREATE OR REPLACE PACKAGE BODY paquete_informes_ventas AS
+
+    PROCEDURE ventas_por_cliente(p_cliente_id IN NUMBER) AS
+    BEGIN
+        FOR venta IN (
+            SELECT dp.CANTIDAD, (dp.CANTIDAD * pr.PRECIO) AS Total_Venta
+            FROM PEDIDOS ped
+            JOIN DETALLE_PEDIDOS dp ON ped.PEDIDO_ID = dp.PEDIDO_ID
+            JOIN PRECIOS pr ON dp.PRODUCTO_ID = pr.PRODUCTO_ID
+            WHERE ped.CLIENTE_ID = p_cliente_id
+        ) LOOP
+            DBMS_OUTPUT.PUT_LINE(' | Cantidad: ' || venta.CANTIDAD ||
+                                 ' | Total Venta: ' || venta.Total_Venta);
+        END LOOP;
+    END ventas_por_cliente;
+
+    PROCEDURE ventas_por_producto(p_producto_id IN NUMBER) AS
+    BEGIN
+        FOR venta IN (
+            SELECT ped.FECHA_PEDIDO, dp.CANTIDAD, (dp.CANTIDAD * pr.PRECIO) AS Total_Venta
+            FROM PEDIDOS ped
+            JOIN DETALLE_PEDIDOS dp ON ped.PEDIDO_ID = dp.PEDIDO_ID
+            JOIN PRECIOS pr ON dp.PRODUCTO_ID = pr.PRODUCTO_ID
+            WHERE pr.PRODUCTO_ID = p_producto_id
+        ) LOOP
+            DBMS_OUTPUT.PUT_LINE('Fecha Pedido: ' || venta.FECHA_PEDIDO ||
+                                 ' | Cantidad: ' || venta.CANTIDAD ||
+                                 ' | Total Venta: ' || venta.Total_Venta);
+        END LOOP;
+    END ventas_por_producto;
+
+    PROCEDURE ventas_por_periodo(p_fecha_inicio IN DATE, p_fecha_fin IN DATE) AS
+    BEGIN
+        FOR venta IN (
+            SELECT ped.FECHA_PEDIDO, dp.CANTIDAD, (dp.CANTIDAD * pr.PRECIO) AS Total_Venta
+            FROM PEDIDOS ped
+            JOIN DETALLE_PEDIDOS dp ON ped.PEDIDO_ID = dp.PEDIDO_ID
+            JOIN PRECIOS pr ON dp.PRODUCTO_ID = pr.PRODUCTO_ID
+            WHERE ped.FECHA_PEDIDO BETWEEN p_fecha_inicio AND p_fecha_fin
+        ) LOOP
+            DBMS_OUTPUT.PUT_LINE('Fecha Pedido: ' || venta.FECHA_PEDIDO ||
+                                 ' | Cantidad: ' || venta.CANTIDAD ||
+                                 ' | Total Venta: ' || venta.Total_Venta);
+        END LOOP;
+    END ventas_por_periodo;
+
+    PROCEDURE ventas_totales AS
+    BEGIN
+        FOR venta IN (
+            SELECT SUM(dp.CANTIDAD * pr.PRECIO) AS Total_Ventas
+            FROM DETALLE_PEDIDOS dp
+            JOIN PRECIOS pr ON dp.PRODUCTO_ID = pr.PRODUCTO_ID
+        ) LOOP
+            DBMS_OUTPUT.PUT_LINE('Total Ventas: ' || venta.Total_Ventas);
+        END LOOP;
+    END ventas_totales;
+
+END paquete_informes_ventas;
+
+-----
+
+CREATE OR REPLACE PACKAGE paquete_descuentos AS
+    PROCEDURE aplicar_descuento(p_descuento_id IN NUMBER, p_monto_descuento IN NUMBER, p_producto_id IN NUMBER);
+    PROCEDURE consultar_descuentos(p_producto_id IN NUMBER);
+    PROCEDURE eliminar_descuento(p_descuento_id IN NUMBER);
+END paquete_descuentos;
+CREATE OR REPLACE PACKAGE BODY paquete_descuentos AS
+
+    PROCEDURE aplicar_descuento(p_descuento_id IN NUMBER, p_monto_descuento IN NUMBER, p_producto_id IN NUMBER) AS
+    BEGIN
+        INSERT INTO DESCUENTOS(DESCUENTO_ID, DESCUENTO, PRODUCTO_ID)
+        VALUES(p_descuento_id, p_monto_descuento, p_producto_id);
+        COMMIT;
+    END aplicar_descuento;
+
+    PROCEDURE consultar_descuentos(p_producto_id IN NUMBER) AS
+    BEGIN
+        FOR descuento IN (
+            SELECT * FROM DESCUENTOS WHERE PRODUCTO_ID = p_producto_id
+        ) LOOP
+            DBMS_OUTPUT.PUT_LINE('Descuento ID: ' || descuento.DESCUENTO_ID || ', Monto: ' || descuento.DESCUENTO);
+        END LOOP;
+    END consultar_descuentos;
+
+    PROCEDURE eliminar_descuento(p_descuento_id IN NUMBER) AS
+    BEGIN
+        DELETE FROM DESCUENTOS WHERE DESCUENTO_ID = p_descuento_id;
+        COMMIT;
+    END eliminar_descuento;
+
+END paquete_descuentos;
+
+---
+
+CREATE OR REPLACE PACKAGE paquete_precios AS
+    PROCEDURE obtener_precio(p_producto_id IN NUMBER, p_precio OUT NUMBER);
+    PROCEDURE actualizar_precio(p_producto_id IN NUMBER, p_nuevo_precio IN NUMBER);
+    PROCEDURE establecer_precio(p_producto_id IN NUMBER, p_precio IN NUMBER);
+    PROCEDURE aplicar_descuento(p_producto_id IN NUMBER, p_descuento_porcentaje IN NUMBER);
+END paquete_precios;
+CREATE OR REPLACE PACKAGE BODY paquete_precios AS
+
+   
+    PROCEDURE obtener_precio(p_producto_id IN NUMBER, p_precio OUT NUMBER) AS
+    BEGIN
+      
+        SELECT PRECIO
+        INTO p_precio
+        FROM PRECIOS
+        WHERE PRODUCTO_ID = p_producto_id
+        ORDER BY FECHA_VIGENCIA DESC
+        FETCH FIRST 1 ROWS ONLY;
+    END obtener_precio;
+
+    
+    PROCEDURE actualizar_precio(p_producto_id IN NUMBER, p_nuevo_precio IN NUMBER) AS
+    BEGIN
+     
+        INSERT INTO PRECIOS (PRODUCTO_ID, PRECIO, FECHA_VIGENCIA)
+        VALUES (p_producto_id, p_nuevo_precio, SYSDATE);
+        COMMIT;
+    END actualizar_precio;
+
+    
+    PROCEDURE establecer_precio(p_producto_id IN NUMBER, p_precio IN NUMBER) AS
+    BEGIN
+      
+        INSERT INTO PRECIOS (PRODUCTO_ID, PRECIO, FECHA_VIGENCIA)
+        VALUES (p_producto_id, p_precio, SYSDATE);
+        COMMIT;
+    END establecer_precio;
+
+    
+    PROCEDURE aplicar_descuento(p_producto_id IN NUMBER, p_descuento_porcentaje IN NUMBER) AS
+        v_precio_actual NUMBER;
+        v_precio_descuento NUMBER;
+    BEGIN
+       
+        SELECT PRECIO
+        INTO v_precio_actual
+        FROM PRECIOS
+        WHERE PRODUCTO_ID = p_producto_id
+        ORDER BY FECHA_VIGENCIA DESC
+        FETCH FIRST 1 ROWS ONLY;
+
+       
+        v_precio_descuento := v_precio_actual - (v_precio_actual * p_descuento_porcentaje / 100);
+
+        
+        INSERT INTO PRECIOS (PRODUCTO_ID, PRECIO, FECHA_VIGENCIA)
+        VALUES (p_producto_id, v_precio_descuento, SYSDATE);
+        COMMIT;
+    END aplicar_descuento;
+
+END paquete_precios;
