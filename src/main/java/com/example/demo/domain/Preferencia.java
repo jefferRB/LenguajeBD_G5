@@ -22,10 +22,10 @@ public class Preferencia implements Serializable {
     private String preferencia;
 
     @ManyToOne
-    @JoinColumn(name = "CLIENTE_ID", nullable = false)  // Añadido nullable=false
+    @JoinColumn(name = "CLIENTE_ID", nullable = false) 
     private Cliente cliente;
 
-    // Constructor adicional para la clave primaria
+   
     public Preferencia(Long preferenciaId) {
         this.preferenciaId = preferenciaId;
     }

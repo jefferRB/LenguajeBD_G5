@@ -38,7 +38,7 @@ public class ClienteServiceImpl implements ClienteService {
     @Transactional
     public void save(Cliente cliente) {
         if (cliente.getClienteId() != null) {
-            // Si el cliente tiene un ID, actualiza el cliente existente
+            
             Cliente clienteExistente = clienteDao.findById(cliente.getClienteId()).orElse(null);
             if (clienteExistente != null) {
                 clienteExistente.setNombre(cliente.getNombre());
@@ -50,7 +50,7 @@ public class ClienteServiceImpl implements ClienteService {
                 return;
             }
         }
-        // Si el cliente no tiene un ID, crea uno nuevo
+       
         clienteDao.save(cliente);
     }
 
@@ -67,7 +67,7 @@ public class ClienteServiceImpl implements ClienteService {
     @Transactional
     @Override
     public void deleteById(Long id) {
-        preferenciaDao.deleteByClienteId(id); // Primero eliminar registros dependientes
-        clienteDao.deleteById(id); // Luego eliminar el cliente
+        preferenciaDao.deleteByClienteId(id);
+        clienteDao.deleteById(id); 
     }
 }

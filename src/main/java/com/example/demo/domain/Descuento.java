@@ -33,7 +33,7 @@ public class Descuento implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date fechaFin;
 
-    // Constructor adicional para la clave primaria
+   
     public Descuento(Long descuentoId) {
         this.descuentoId = descuentoId;
     }

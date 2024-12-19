@@ -9,11 +9,11 @@ public interface TelefonoService {
 
     Telefono getTelefono(Telefono telefono);
 
-    Telefono getTelefonoById(Long id); // Método adicional para obtener teléfono por ID
+    Telefono getTelefonoById(Long id); 
 
     void save(Telefono telefono);
 
     void delete(Telefono telefono);
 
-    void deleteById(Long id); // Método adicional para eliminar por ID
+    void deleteById(Long id); 
 }

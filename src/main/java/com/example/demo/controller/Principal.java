@@ -14,6 +14,6 @@ public class Principal {
 
     @GetMapping("/")
     public String index() {
-        return "Base"; // Asegúrate de que esto coincida con el nombre del archivo Base.html
+        return "Base";
     }
 }

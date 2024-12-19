@@ -22,23 +22,23 @@ public class ProductoController {
     public String listProductos(Model model) {
         List<Producto> productos = productoService.getProductos();
         model.addAttribute("productos", productos);
-        model.addAttribute("producto", new Producto()); // Para el formulario de agregar
-        return "productos"; // Nombre de la vista
+        model.addAttribute("producto", new Producto());
+        return "productos"; 
     }
 
     @PostMapping
     public String saveProducto(@ModelAttribute Producto producto) {
         productoService.save(producto);
-        return "redirect:/productos"; // Redirigir a la lista de productos
+        return "redirect:/productos"; 
     }
 
     @GetMapping("/edit/{id}")
     public String editProducto(@PathVariable("id") Long id, Model model) {
         Producto producto = productoService.getProductoById(id);
-        List<Producto> productos = productoService.getProductos(); // Cargar nuevamente la lista de productos
+        List<Producto> productos = productoService.getProductos(); 
         model.addAttribute("producto", producto);
-        model.addAttribute("productos", productos); // Asegurarse de que la lista se envíe a la vista
-        return "productos"; // Nombre de la vista
+        model.addAttribute("productos", productos); 
+        return "productos"; 
     }
 
     @PostMapping("/delete/{id}")
@@ -49,6 +49,6 @@ public class ProductoController {
         } catch (DataIntegrityViolationException e) {
             redirectAttributes.addFlashAttribute("error", "No se puede eliminar el producto porque tiene registros asociados.");
         }
-        return "redirect:/productos"; // Redirigir a la lista de productos
+        return "redirect:/productos"; 
     }
 }

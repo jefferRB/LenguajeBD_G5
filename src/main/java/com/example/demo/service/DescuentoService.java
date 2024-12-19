@@ -9,11 +9,11 @@ public interface DescuentoService {
 
     Descuento getDescuento(Descuento descuento);
 
-    Descuento getDescuentoById(Long id); // Método adicional para obtener descuento por ID
+    Descuento getDescuentoById(Long id); 
 
     void save(Descuento descuento);
 
     void delete(Descuento descuento);
 
-    void deleteById(Long id); // Método adicional para eliminar por ID
+    void deleteById(Long id); 
 }

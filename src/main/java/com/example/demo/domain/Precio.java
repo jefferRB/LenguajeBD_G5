@@ -29,7 +29,7 @@ public class Precio implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date fechaVigencia;
 
-    // Constructor adicional para la clave primaria
+  
     public Precio(Long precioId) {
         this.precioId = precioId;
     }

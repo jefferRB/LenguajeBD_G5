@@ -9,11 +9,11 @@ public interface PedidoService {
 
     Pedido getPedido(Pedido pedido);
 
-    Pedido getPedidoById(Long id); // Método adicional para obtener pedido por ID
+    Pedido getPedidoById(Long id); 
 
     void save(Pedido pedido);
 
     void delete(Pedido pedido);
 
-    void deleteById(Long id); // Método adicional para eliminar por ID
+    void deleteById(Long id); 
 }

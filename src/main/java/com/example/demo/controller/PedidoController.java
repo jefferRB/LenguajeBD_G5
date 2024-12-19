@@ -22,23 +22,23 @@ public class PedidoController {
     public String listPedidos(Model model) {
         List<Pedido> pedidos = pedidoService.getPedidos();
         model.addAttribute("pedidos", pedidos);
-        model.addAttribute("pedido", new Pedido()); // Para el formulario de agregar
-        return "pedidos"; // Nombre de la vista
+        model.addAttribute("pedido", new Pedido()); 
+        return "pedidos"; 
     }
 
     @PostMapping
     public String savePedido(@ModelAttribute Pedido pedido) {
         pedidoService.save(pedido);
-        return "redirect:/pedidos"; // Redirigir a la lista de pedidos
+        return "redirect:/pedidos";
     }
 
     @GetMapping("/edit/{id}")
     public String editPedido(@PathVariable("id") Long id, Model model) {
         Pedido pedido = pedidoService.getPedidoById(id);
-        List<Pedido> pedidos = pedidoService.getPedidos(); // Cargar nuevamente la lista de pedidos
+        List<Pedido> pedidos = pedidoService.getPedidos(); 
         model.addAttribute("pedido", pedido);
-        model.addAttribute("pedidos", pedidos); // Asegurarse de que la lista se envíe a la vista
-        return "pedidos"; // Nombre de la vista
+        model.addAttribute("pedidos", pedidos); 
+        return "pedidos";
     }
 
     @PostMapping("/delete/{id}")
@@ -49,6 +49,6 @@ public class PedidoController {
         } catch (DataIntegrityViolationException e) {
             redirectAttributes.addFlashAttribute("error", "No se puede eliminar el pedido porque tiene registros asociados.");
         }
-        return "redirect:/pedidos"; // Redirigir a la lista de pedidos
+        return "redirect:/pedidos"; 
     }
 }

@@ -22,23 +22,23 @@ public class CategoriaProductoController {
     public String listCategoriaProductos(Model model) {
         List<CategoriaProducto> categorias = categoriaProductoService.getCategorias();
         model.addAttribute("categorias", categorias);
-        model.addAttribute("categoria", new CategoriaProducto()); // Para el formulario de agregar
-        return "categoria_productos"; // Nombre de la vista
+        model.addAttribute("categoria", new CategoriaProducto()); 
+        return "categoria_productos"; 
     }
 
     @PostMapping
     public String saveCategoriaProducto(@ModelAttribute CategoriaProducto categoria) {
         categoriaProductoService.save(categoria);
-        return "redirect:/categoria_productos"; // Redirigir a la lista de categorías de productos
+        return "redirect:/categoria_productos"; 
     }
 
     @GetMapping("/edit/{id}")
     public String editCategoriaProducto(@PathVariable("id") Long id, Model model) {
         CategoriaProducto categoria = categoriaProductoService.getCategoriaById(id);
-        List<CategoriaProducto> categorias = categoriaProductoService.getCategorias(); // Cargar nuevamente la lista de categorías
+        List<CategoriaProducto> categorias = categoriaProductoService.getCategorias(); 
         model.addAttribute("categoria", categoria);
-        model.addAttribute("categorias", categorias); // Asegurarse de que la lista se envíe a la vista
-        return "categoria_productos"; // Nombre de la vista
+        model.addAttribute("categorias", categorias); 
+        return "categoria_productos"; 
     }
 
     @PostMapping("/delete/{id}")
@@ -49,6 +49,6 @@ public class CategoriaProductoController {
         } catch (DataIntegrityViolationException e) {
             redirectAttributes.addFlashAttribute("error", "No se puede eliminar la categoría porque tiene registros asociados.");
         }
-        return "redirect:/categoria_productos"; // Redirigir a la lista de categorías de productos
+        return "redirect:/categoria_productos"; 
     }
 }

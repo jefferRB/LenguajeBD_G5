@@ -22,23 +22,23 @@ public class DetallePedidoController {
     public String listDetallePedidos(Model model) {
         List<DetallePedido> detallePedidos = detallePedidoService.getDetallesPedido();
         model.addAttribute("detallePedidos", detallePedidos);
-        model.addAttribute("detallePedido", new DetallePedido()); // Para el formulario de agregar
-        return "detalle_pedidos"; // Nombre de la vista
+        model.addAttribute("detallePedido", new DetallePedido()); 
+        return "detalle_pedidos";
     }
 
     @PostMapping
     public String saveDetallePedido(@ModelAttribute DetallePedido detallePedido) {
         detallePedidoService.save(detallePedido);
-        return "redirect:/detalle_pedidos"; // Redirigir a la lista de detalle de pedidos
+        return "redirect:/detalle_pedidos"; 
     }
 
     @GetMapping("/edit/{id}")
     public String editDetallePedido(@PathVariable("id") Long id, Model model) {
         DetallePedido detallePedido = detallePedidoService.getDetallePedidoById(id);
-        List<DetallePedido> detallePedidos = detallePedidoService.getDetallesPedido(); // Cargar nuevamente la lista de detalle de pedidos
+        List<DetallePedido> detallePedidos = detallePedidoService.getDetallesPedido(); 
         model.addAttribute("detallePedido", detallePedido);
-        model.addAttribute("detallePedidos", detallePedidos); // Asegurarse de que la lista se envíe a la vista
-        return "detalle_pedidos"; // Nombre de la vista
+        model.addAttribute("detallePedidos", detallePedidos); 
+        return "detalle_pedidos"; 
     }
 
     @PostMapping("/delete/{id}")
@@ -49,6 +49,6 @@ public class DetallePedidoController {
         } catch (DataIntegrityViolationException e) {
             redirectAttributes.addFlashAttribute("error", "No se puede eliminar el detalle del pedido porque tiene registros asociados.");
         }
-        return "redirect:/detalle_pedidos"; // Redirigir a la lista de detalle de pedidos
+        return "redirect:/detalle_pedidos"; 
     }
 }

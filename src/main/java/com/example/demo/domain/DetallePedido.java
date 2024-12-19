@@ -27,7 +27,7 @@ public class DetallePedido implements Serializable {
     @Column(name = "CANTIDAD", nullable = false)
     private Integer cantidad;
 
-    // Constructor adicional para la clave primaria
+   
     public DetallePedido(Long detallePedidoId) {
         this.detallePedidoId = detallePedidoId;
     }

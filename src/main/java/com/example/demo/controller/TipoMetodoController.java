@@ -22,23 +22,23 @@ public class TipoMetodoController {
     public String listTiposMetodo(Model model) {
         List<TipoMetodo> tiposMetodo = tipoMetodoService.getTiposMetodo();
         model.addAttribute("tiposMetodo", tiposMetodo);
-        model.addAttribute("tipoMetodo", new TipoMetodo()); // Para el formulario de agregar
-        return "tipometodos"; // Nombre de la vista
+        model.addAttribute("tipoMetodo", new TipoMetodo());
+        return "tipometodos"; 
     }
 
     @PostMapping
     public String saveTipoMetodo(@ModelAttribute TipoMetodo tipoMetodo) {
         tipoMetodoService.save(tipoMetodo);
-        return "redirect:/tipometodos"; // Redirigir a la lista de tipos de método
+        return "redirect:/tipometodos"; 
     }
 
     @GetMapping("/edit/{id}")
     public String editTipoMetodo(@PathVariable("id") Long id, Model model) {
         TipoMetodo tipoMetodo = tipoMetodoService.getTipoMetodoById(id);
-        List<TipoMetodo> tiposMetodo = tipoMetodoService.getTiposMetodo(); // Cargar nuevamente la lista de tipos de método
+        List<TipoMetodo> tiposMetodo = tipoMetodoService.getTiposMetodo(); 
         model.addAttribute("tipoMetodo", tipoMetodo);
-        model.addAttribute("tiposMetodo", tiposMetodo); // Asegurarse de que la lista se envíe a la vista
-        return "tipometodos"; // Nombre de la vista
+        model.addAttribute("tiposMetodo", tiposMetodo); 
+        return "tipometodos"; 
     }
 
     @PostMapping("/delete/{id}")
@@ -49,6 +49,6 @@ public class TipoMetodoController {
         } catch (DataIntegrityViolationException e) {
             redirectAttributes.addFlashAttribute("error", "No se puede eliminar el tipo de método porque tiene registros asociados.");
         }
-        return "redirect:/tipometodos"; // Redirigir a la lista de tipos de método
+        return "redirect:/tipometodos"; 
     }
 }

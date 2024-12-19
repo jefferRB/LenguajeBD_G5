@@ -24,7 +24,7 @@ public class Telefono implements Serializable {
     @Column(name = "TELEFONO", nullable = false, length = 15)
     private String telefono;
 
-    // Constructor adicional para la clave primaria
+    
     public Telefono(Long telefonoId) {
         this.telefonoId = telefonoId;
     }

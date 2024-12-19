@@ -21,7 +21,7 @@ public class TipoMetodo implements Serializable {
     @Column(name = "METODO_PAGO_ID", nullable = false)
     private Long metodoPagoId;
 
-    // Constructor adicional para la clave primaria
+  
     public TipoMetodo(Long tipoMetodoId) {
         this.tipoMetodoId = tipoMetodoId;
     }

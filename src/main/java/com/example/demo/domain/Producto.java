@@ -33,7 +33,7 @@ public class Producto implements Serializable {
     @Column(name = "ESPECIFICACIONES", nullable = true, length = 200)
     private String especificaciones;
 
-    // Constructor adicional para la clave primaria
+  
     public Producto(Long productoId) {
         this.productoId = productoId;
     }

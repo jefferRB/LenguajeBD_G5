@@ -21,7 +21,7 @@ public class MetodoPago implements Serializable {
     @Column(name = "DESCRIPCION_PAGO", nullable = false, length = 100)
     private String descripcionPago;
 
-    // Constructor adicional para la clave primaria
+    
     public MetodoPago(Long metodoPagoId) {
         this.metodoPagoId = metodoPagoId;
     }

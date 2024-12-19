@@ -9,11 +9,11 @@ public interface PrecioService {
 
     Precio getPrecio(Precio precio);
 
-    Precio getPrecioById(Long id); // Método adicional para obtener precio por ID
+    Precio getPrecioById(Long id); 
 
     void save(Precio precio);
 
     void delete(Precio precio);
 
-    void deleteById(Long id); // Método adicional para eliminar por ID
+    void deleteById(Long id); 
 }

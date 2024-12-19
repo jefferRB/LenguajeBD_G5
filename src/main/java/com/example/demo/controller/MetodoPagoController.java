@@ -22,23 +22,23 @@ public class MetodoPagoController {
     public String listMetodoPagos(Model model) {
         List<MetodoPago> metodoPagos = metodoPagoService.getMetodosPago();
         model.addAttribute("metodoPagos", metodoPagos);
-        model.addAttribute("metodoPago", new MetodoPago()); // Para el formulario de agregar
-        return "metodo_pagos"; // Nombre de la vista
+        model.addAttribute("metodoPago", new MetodoPago()); 
+        return "metodo_pagos"; 
     }
 
     @PostMapping
     public String saveMetodoPago(@ModelAttribute MetodoPago metodoPago) {
         metodoPagoService.save(metodoPago);
-        return "redirect:/metodo_pagos"; // Redirigir a la lista de métodos de pago
+        return "redirect:/metodo_pagos"; 
     }
 
     @GetMapping("/edit/{id}")
     public String editMetodoPago(@PathVariable("id") Long id, Model model) {
         MetodoPago metodoPago = metodoPagoService.getMetodoPagoById(id);
-        List<MetodoPago> metodoPagos = metodoPagoService.getMetodosPago(); // Cargar nuevamente la lista de métodos de pago
+        List<MetodoPago> metodoPagos = metodoPagoService.getMetodosPago(); 
         model.addAttribute("metodoPago", metodoPago);
-        model.addAttribute("metodoPagos", metodoPagos); // Asegurarse de que la lista se envíe a la vista
-        return "metodo_pagos"; // Nombre de la vista
+        model.addAttribute("metodoPagos", metodoPagos); 
+        return "metodo_pagos"; 
     }
 
     @PostMapping("/delete/{id}")
@@ -49,6 +49,6 @@ public class MetodoPagoController {
         } catch (DataIntegrityViolationException e) {
             redirectAttributes.addFlashAttribute("error", "No se puede eliminar el método de pago porque tiene registros asociados.");
         }
-        return "redirect:/metodo_pagos"; // Redirigir a la lista de métodos de pago
+        return "redirect:/metodo_pagos"; 
     }
 }

@@ -7,11 +7,11 @@ public interface InventarioService {
 
     List<Inventario> getInventarios();
 
-    Inventario getInventarioById(Long id); // Método adicional para obtener inventario por ID
+    Inventario getInventarioById(Long id); 
 
     void save(Inventario inventario);
 
     void delete(Inventario inventario);
 
-    void deleteById(Long id); // Método adicional para eliminar por ID
+    void deleteById(Long id); 
 }

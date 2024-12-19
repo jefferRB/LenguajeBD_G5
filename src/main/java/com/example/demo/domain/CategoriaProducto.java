@@ -24,7 +24,7 @@ public class CategoriaProducto implements Serializable {
     @Column(name = "DESCRIPCION", length = 200)
     private String descripcion;
 
-    // Constructor adicional para la clave primaria
+   
     public CategoriaProducto(Long categoriaId) {
         this.categoriaId = categoriaId;
     }

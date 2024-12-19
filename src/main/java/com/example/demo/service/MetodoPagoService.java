@@ -9,11 +9,11 @@ public interface MetodoPagoService {
 
     MetodoPago getMetodoPago(MetodoPago metodoPago);
 
-    MetodoPago getMetodoPagoById(Long id); // Método adicional para obtener método de pago por ID
+    MetodoPago getMetodoPagoById(Long id);
 
     void save(MetodoPago metodoPago);
 
     void delete(MetodoPago metodoPago);
 
-    void deleteById(Long id); // Método adicional para eliminar por ID
+    void deleteById(Long id); 
 }

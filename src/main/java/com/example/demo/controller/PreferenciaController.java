@@ -22,23 +22,23 @@ public class PreferenciaController {
     public String listPreferencias(Model model) {
         List<Preferencia> preferencias = preferenciaService.getPreferencias();
         model.addAttribute("preferencias", preferencias);
-        model.addAttribute("preferencia", new Preferencia()); // Para el formulario de agregar
-        return "preferencias"; // Nombre de la vista
+        model.addAttribute("preferencia", new Preferencia()); 
+        return "preferencias"; 
     }
 
     @PostMapping
     public String savePreferencia(@ModelAttribute Preferencia preferencia) {
         preferenciaService.save(preferencia);
-        return "redirect:/preferencias"; // Redirigir a la lista de preferencias
+        return "redirect:/preferencias"; 
     }
 
     @GetMapping("/edit/{id}")
     public String editPreferencia(@PathVariable("id") Long id, Model model) {
         Preferencia preferencia = preferenciaService.getPreferenciaById(id);
-        List<Preferencia> preferencias = preferenciaService.getPreferencias(); // Cargar nuevamente la lista de preferencias
+        List<Preferencia> preferencias = preferenciaService.getPreferencias(); 
         model.addAttribute("preferencia", preferencia);
-        model.addAttribute("preferencias", preferencias); // Asegurarse de que la lista se envíe a la vista
-        return "preferencias"; // Nombre de la vista
+        model.addAttribute("preferencias", preferencias);
+        return "preferencias"; 
     }
 
     @PostMapping("/delete/{id}")
@@ -49,6 +49,6 @@ public class PreferenciaController {
         } catch (DataIntegrityViolationException e) {
             redirectAttributes.addFlashAttribute("error", "No se puede eliminar la preferencia porque tiene registros asociados.");
         }
-        return "redirect:/preferencias"; // Redirigir a la lista de preferencias
+        return "redirect:/preferencias"; 
     }
 }

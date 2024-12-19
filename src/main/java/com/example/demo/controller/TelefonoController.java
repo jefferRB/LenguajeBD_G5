@@ -22,23 +22,23 @@ public class TelefonoController {
     public String listTelefonos(Model model) {
         List<Telefono> telefonos = telefonoService.getTelefonos();
         model.addAttribute("telefonos", telefonos);
-        model.addAttribute("telefono", new Telefono()); // Para el formulario de agregar
-        return "telefonos"; // Nombre de la vista
+        model.addAttribute("telefono", new Telefono()); 
+        return "telefonos"; 
     }
 
     @PostMapping
     public String saveTelefono(@ModelAttribute Telefono telefono) {
         telefonoService.save(telefono);
-        return "redirect:/telefonos"; // Redirigir a la lista de teléfonos
+        return "redirect:/telefonos"; 
     }
 
     @GetMapping("/edit/{id}")
     public String editTelefono(@PathVariable("id") Long id, Model model) {
         Telefono telefono = telefonoService.getTelefonoById(id);
-        List<Telefono> telefonos = telefonoService.getTelefonos(); // Cargar nuevamente la lista de teléfonos
+        List<Telefono> telefonos = telefonoService.getTelefonos(); 
         model.addAttribute("telefono", telefono);
-        model.addAttribute("telefonos", telefonos); // Asegurarse de que la lista se envíe a la vista
-        return "telefonos"; // Nombre de la vista
+        model.addAttribute("telefonos", telefonos);
+        return "telefonos"; 
     }
 
     @PostMapping("/delete/{id}")
@@ -49,6 +49,6 @@ public class TelefonoController {
         } catch (DataIntegrityViolationException e) {
             redirectAttributes.addFlashAttribute("error", "No se puede eliminar el teléfono porque tiene registros asociados.");
         }
-        return "redirect:/telefonos"; // Redirigir a la lista de teléfonos
+        return "redirect:/telefonos"; 
     }
 }

@@ -9,11 +9,11 @@ public interface PreferenciaService {
 
     Preferencia getPreferencia(Preferencia preferencia);
 
-    Preferencia getPreferenciaById(Long id); // Método adicional para obtener preferencia por ID
+    Preferencia getPreferenciaById(Long id); 
 
     void save(Preferencia preferencia);
 
     void delete(Preferencia preferencia);
 
-    void deleteById(Long id); // Método adicional para eliminar por ID
+    void deleteById(Long id); 
 }

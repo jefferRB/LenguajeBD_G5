@@ -22,23 +22,23 @@ public class DescuentoController {
     public String listDescuentos(Model model) {
         List<Descuento> descuentos = descuentoService.getDescuentos();
         model.addAttribute("descuentos", descuentos);
-        model.addAttribute("descuento", new Descuento()); // Para el formulario de agregar
-        return "descuentos"; // Nombre de la vista
+        model.addAttribute("descuento", new Descuento()); 
+        return "descuentos";
     }
 
     @PostMapping
     public String saveDescuento(@ModelAttribute Descuento descuento) {
         descuentoService.save(descuento);
-        return "redirect:/descuentos"; // Redirigir a la lista de descuentos
+        return "redirect:/descuentos";
     }
 
     @GetMapping("/edit/{id}")
     public String editDescuento(@PathVariable("id") Long id, Model model) {
         Descuento descuento = descuentoService.getDescuentoById(id);
-        List<Descuento> descuentos = descuentoService.getDescuentos(); // Cargar nuevamente la lista de descuentos
+        List<Descuento> descuentos = descuentoService.getDescuentos(); 
         model.addAttribute("descuento", descuento);
-        model.addAttribute("descuentos", descuentos); // Asegurarse de que la lista se envíe a la vista
-        return "descuentos"; // Nombre de la vista
+        model.addAttribute("descuentos", descuentos);
+        return "descuentos"; 
     }
 
     @PostMapping("/delete/{id}")
@@ -49,6 +49,6 @@ public class DescuentoController {
         } catch (DataIntegrityViolationException e) {
             redirectAttributes.addFlashAttribute("error", "No se puede eliminar el descuento porque tiene registros asociados.");
         }
-        return "redirect:/descuentos"; // Redirigir a la lista de descuentos
+        return "redirect:/descuentos"; 
     }
 }

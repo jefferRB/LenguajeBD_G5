@@ -22,23 +22,23 @@ public class PrecioController {
     public String listPrecios(Model model) {
         List<Precio> precios = precioService.getPrecios();
         model.addAttribute("precios", precios);
-        model.addAttribute("precio", new Precio()); // Para el formulario de agregar
-        return "precios"; // Nombre de la vista
+        model.addAttribute("precio", new Precio());
+        return "precios"; 
     }
 
     @PostMapping
     public String savePrecio(@ModelAttribute Precio precio) {
         precioService.save(precio);
-        return "redirect:/precios"; // Redirigir a la lista de precios
+        return "redirect:/precios"; 
     }
 
     @GetMapping("/edit/{id}")
     public String editPrecio(@PathVariable("id") Long id, Model model) {
         Precio precio = precioService.getPrecioById(id);
-        List<Precio> precios = precioService.getPrecios(); // Cargar nuevamente la lista de precios
+        List<Precio> precios = precioService.getPrecios(); 
         model.addAttribute("precio", precio);
-        model.addAttribute("precios", precios); // Asegurarse de que la lista se envíe a la vista
-        return "precios"; // Nombre de la vista
+        model.addAttribute("precios", precios); 
+        return "precios"; 
     }
 
     @PostMapping("/delete/{id}")
@@ -49,6 +49,6 @@ public class PrecioController {
         } catch (DataIntegrityViolationException e) {
             redirectAttributes.addFlashAttribute("error", "No se puede eliminar el precio porque tiene registros asociados.");
         }
-        return "redirect:/precios"; // Redirigir a la lista de precios
+        return "redirect:/precios"; 
     }
 }

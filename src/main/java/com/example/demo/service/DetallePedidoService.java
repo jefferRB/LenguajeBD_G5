@@ -9,11 +9,11 @@ public interface DetallePedidoService {
 
     DetallePedido getDetallePedido(DetallePedido detallePedido);
 
-    DetallePedido getDetallePedidoById(Long id); // Método adicional para obtener detalle de pedido por ID
+    DetallePedido getDetallePedidoById(Long id); 
 
     void save(DetallePedido detallePedido);
 
     void delete(DetallePedido detallePedido);
 
-    void deleteById(Long id); // Método adicional para eliminar por ID
+    void deleteById(Long id); 
 }

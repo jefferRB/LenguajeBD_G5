@@ -9,11 +9,11 @@ public interface CategoriaProductoService {
 
     CategoriaProducto getCategoria(CategoriaProducto categoria);
 
-    CategoriaProducto getCategoriaById(Long id); // Método adicional para obtener categoría por ID
+    CategoriaProducto getCategoriaById(Long id); 
 
     void save(CategoriaProducto categoria);
 
     void delete(CategoriaProducto categoria);
 
-    void deleteById(Long id); // Método adicional para eliminar por ID
+    void deleteById(Long id); 
 }

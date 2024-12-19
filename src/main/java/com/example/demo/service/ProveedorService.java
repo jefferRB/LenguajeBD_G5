@@ -14,11 +14,11 @@ public interface ProveedorService {
 
     Proveedor getProveedor(Proveedor proveedor);
 
-    Proveedor getProveedorById(Long id); // Método adicional para obtener proveedor por ID
+    Proveedor getProveedorById(Long id); 
 
     void save(Proveedor proveedor);
 
     void delete(Proveedor proveedor);
 
-    void deleteById(Long id); // Método adicional para eliminar por ID
+    void deleteById(Long id); 
 }

@@ -36,7 +36,7 @@ public class Pedido implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date fechaPedido;
 
-    // Constructor adicional para la clave primaria
+    
     public Pedido(Long pedidoId) {
         this.pedidoId = pedidoId;
     }
