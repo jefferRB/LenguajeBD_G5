@@ -3,48 +3,52 @@ package com.example.demo.controller;
 import com.example.demo.domain.MetodoPago;
 import com.example.demo.service.MetodoPagoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-/**
- *
- * @author Tom
- */
+import java.util.List;
+
 @Controller
-@RequestMapping("/metodoPago")
+@RequestMapping("/metodo_pagos")
 public class MetodoPagoController {
 
     @Autowired
     private MetodoPagoService metodoPagoService;
 
-    @GetMapping("/listado")
-    public String listado(Model model) {
-        var lista = metodoPagoService.getMetodosPago();
-        model.addAttribute("metodosPago", lista);
-        model.addAttribute("totalMetodosPago", lista.size());
-        return "/metodoPago/listado";
+    @GetMapping
+    public String listMetodoPagos(Model model) {
+        List<MetodoPago> metodoPagos = metodoPagoService.getMetodosPago();
+        model.addAttribute("metodoPagos", metodoPagos);
+        model.addAttribute("metodoPago", new MetodoPago()); // Para el formulario de agregar
+        return "metodo_pagos"; // Nombre de la vista
     }
 
-    @PostMapping("/guardar")
-    public String save(MetodoPago metodoPago) {
+    @PostMapping
+    public String saveMetodoPago(@ModelAttribute MetodoPago metodoPago) {
         metodoPagoService.save(metodoPago);
-        return "redirect:/metodoPago/listado";
+        return "redirect:/metodo_pagos"; // Redirigir a la lista de métodos de pago
     }
 
-    @GetMapping("/modifica/{metodoPagoId}")
-    public String modifica(@PathVariable("metodoPagoId") Long metodoPagoId, Model model) {
-        MetodoPago metodoPago = metodoPagoService.getMetodoPago(new MetodoPago(metodoPagoId));
+    @GetMapping("/edit/{id}")
+    public String editMetodoPago(@PathVariable("id") Long id, Model model) {
+        MetodoPago metodoPago = metodoPagoService.getMetodoPagoById(id);
+        List<MetodoPago> metodoPagos = metodoPagoService.getMetodosPago(); // Cargar nuevamente la lista de métodos de pago
         model.addAttribute("metodoPago", metodoPago);
-        return "/metodoPago/modifica";
+        model.addAttribute("metodoPagos", metodoPagos); // Asegurarse de que la lista se envíe a la vista
+        return "metodo_pagos"; // Nombre de la vista
     }
 
-    @GetMapping("/eliminar/{metodoPagoId}")
-    public String elimina(@PathVariable("metodoPagoId") Long metodoPagoId) {
-        metodoPagoService.delete(new MetodoPago(metodoPagoId));
-        return "redirect:/metodoPago/listado";
+    @PostMapping("/delete/{id}")
+    public String deleteMetodoPago(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+        try {
+            metodoPagoService.deleteById(id);
+            redirectAttributes.addFlashAttribute("message", "Método de pago eliminado correctamente.");
+        } catch (DataIntegrityViolationException e) {
+            redirectAttributes.addFlashAttribute("error", "No se puede eliminar el método de pago porque tiene registros asociados.");
+        }
+        return "redirect:/metodo_pagos"; // Redirigir a la lista de métodos de pago
     }
 }

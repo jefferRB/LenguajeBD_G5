@@ -12,12 +12,14 @@
 
     <groupId>com.lenguaje_bd</groupId>
     <artifactId>LenguajeBD_G5</artifactId>
-    <version>21</version>
+    <version>17</version>
     <name>Proyecto BDA</name>
     <description>Trabajo de Proyecto Final</description>
 
     <properties>
-        <java.version>21</java.version>
+        <java.version>17</java.version>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
     </properties>
 
     <dependencies>
@@ -44,11 +46,16 @@
         </dependency>
 
         <!-- Oracle JDBC Driver -->
-        <dependency>
-            <groupId>com.oracle.database.jdbc</groupId>
-            <artifactId>ojdbc11</artifactId>
-            <scope>runtime</scope>
-        </dependency>
+           <dependency>
+        <groupId>com.oracle.database.jdbc</groupId>
+        <artifactId>ojdbc8</artifactId>
+        <version>23.2.0.0</version>
+    </dependency>
+    <dependency>
+        <groupId>org.hibernate</groupId>
+        <artifactId>hibernate-core</artifactId>
+        <version>6.2.4.Final</version> 
+    </dependency>
 
         <!-- Lombok -->
         <dependency>
@@ -68,28 +75,33 @@
         <dependency>
             <groupId>org.webjars</groupId>
             <artifactId>bootstrap</artifactId>
-            <version>5.3.2</version>
+            <version>5.2.3</version> <!-- Versión válida y disponible -->
         </dependency>
         <dependency>
             <groupId>org.webjars</groupId>
             <artifactId>font-awesome</artifactId>
-            <version>6.5.1</version>
+            <version>5.15.4</version> <!-- Versión común -->
         </dependency>
         <dependency>
             <groupId>org.webjars</groupId>
             <artifactId>jquery</artifactId>
-            <version>3.7.1</version>
+            <version>3.6.0</version> <!-- Versión común -->
         </dependency>
         <dependency>
             <groupId>org.webjars</groupId>
             <artifactId>popper.js</artifactId>
-            <version>2.11.7</version>
+            <version>2.9.3</version> <!-- Versión común -->
         </dependency>
         <dependency>
             <groupId>org.webjars</groupId>
             <artifactId>webjars-locator</artifactId>
-            <version>0.50</version>
+            <version>0.44</version> <!-- Versión válida y disponible -->
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+
     </dependencies>
 
     <build>

@@ -5,10 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.io.Serializable;
-/**
- *
- * @author Tom
- */
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -18,12 +15,13 @@ public class TipoMetodo implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "TIPO_METODO_ID")
     private Long tipoMetodoId;
 
     @Column(name = "METODO_PAGO_ID", nullable = false)
     private Long metodoPagoId;
 
-  
+    // Constructor adicional para la clave primaria
     public TipoMetodo(Long tipoMetodoId) {
         this.tipoMetodoId = tipoMetodoId;
     }

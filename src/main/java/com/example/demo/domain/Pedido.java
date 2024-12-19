@@ -7,10 +7,6 @@ import lombok.NoArgsConstructor;
 import java.io.Serializable;
 import java.util.Date;
 
-/**
- *
- * @author Tom
- */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -20,6 +16,7 @@ public class Pedido implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "PEDIDO_ID")
     private Long pedidoId;
 
     @Column(name = "METODO_PAGO_ID", nullable = false)
@@ -39,7 +36,7 @@ public class Pedido implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date fechaPedido;
 
-   
+    // Constructor adicional para la clave primaria
     public Pedido(Long pedidoId) {
         this.pedidoId = pedidoId;
     }

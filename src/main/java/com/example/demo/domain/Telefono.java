@@ -6,10 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.io.Serializable;
 
-/**
- *
- * @author jeffer
- */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -19,6 +15,7 @@ public class Telefono implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "TELEFONO_ID")
     private Long telefonoId;
 
     @Column(name = "CLIENTE_ID", nullable = false)

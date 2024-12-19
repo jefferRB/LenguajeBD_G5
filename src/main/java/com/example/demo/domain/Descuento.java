@@ -7,10 +7,6 @@ import lombok.NoArgsConstructor;
 import java.io.Serializable;
 import java.util.Date;
 
-/**
- *
- * @author Tom
- */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -20,6 +16,7 @@ public class Descuento implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "DESCUENTO_ID")
     private Long descuentoId;
 
     @Column(name = "PRODUCTO_ID", nullable = false)
@@ -36,7 +33,7 @@ public class Descuento implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date fechaFin;
 
- 
+    // Constructor adicional para la clave primaria
     public Descuento(Long descuentoId) {
         this.descuentoId = descuentoId;
     }

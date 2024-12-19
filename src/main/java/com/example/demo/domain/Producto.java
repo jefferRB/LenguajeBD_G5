@@ -5,10 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.io.Serializable;
-/**
- *
- * @author Tom
- */
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -18,6 +15,7 @@ public class Producto implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "PRODUCTO_ID")
     private Long productoId;
 
     @Column(name = "CATEGORIA_ID", nullable = false)
@@ -34,8 +32,9 @@ public class Producto implements Serializable {
 
     @Column(name = "ESPECIFICACIONES", nullable = true, length = 200)
     private String especificaciones;
-    
-public Producto(Long productoId) {
+
+    // Constructor adicional para la clave primaria
+    public Producto(Long productoId) {
         this.productoId = productoId;
     }
 }

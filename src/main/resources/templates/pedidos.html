@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Pedidos</title>
+    <style>
+        @tailwind base;
+        @tailwind components;
+        @tailwind utilities;
+
+        body {
+            font-family: 'Arial', sans-serif;
+        }
+
+        .menu {
+            background-color: #1a202c;
+            color: white;
+        }
+
+        .menu a {
+            color: white;
+            text-decoration: none;
+            padding: 1rem;
+        }
+
+        .menu a:hover {
+            background-color: #2d3748;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+
+        .content {
+            padding: 2rem;
+            background-color: #f7fafc;
+            border-radius: 0.5rem;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+
+<header class="menu p-4">
+    <nav class="container flex justify-between items-center">
+        <div>
+            <a href="http://localhost" class="mr-4">Inicio</a>
+            <a href="http://localhost/clientes" class="mr-4">Clientes</a>
+            <a href="http://localhost/proveedores" class="mr-4">Proveedores</a>
+            <a href="http://localhost/productos" class="mr-4">Productos</a>
+            <a href="http://localhost/telefonos" class="mr-4">Teléfonos</a>
+            <a href="http://localhost/tienda" class="mr-4">Tienda</a>
+            <a href="http://localhost/preferencias" class="mr-4">Preferencias</a>
+            <a href="http://localhost/pedidos" class="mr-4">Pedidos</a>
+            <a href="http://localhost/detalle_pedidos" class="mr-4">Detalle Pedidos</a>
+            <a href="http://localhost/inventarios" class="mr-4">Inventarios</a>
+            <a href="http://localhost/tipometodos" class="mr-4">Tipo Métodos</a>
+            <a href="http://localhost/metodo_pagos" class="mr-4">Método Pagos</a>
+            <a href="http://localhost/precios" class="mr-4">Precios</a>
+            <a href="http://localhost/categoria_productos" class="mr-4">Categoría Productos</a>
+            <a href="http://localhost/descuentos" class="mr-4">Descuentos</a>
+        </div>
+    </nav>
+</header>
+
+<main class="container mt-4">
+    <div class="content">
+        <h2 class="text-2xl font-bold mb-4">Gestión de Pedidos</h2>
+        <h2 class="text-xl font-bold mb-4">Lista de Pedidos</h2>
+        <table class="min-w-full bg-white border border-gray-200">
+            <thead>
+            <tr>
+                <th class="px-4 py-2 border">ID</th>
+                <th class="px-4 py-2 border">Método Pago ID</th>
+                <th class="px-4 py-2 border">Cliente ID</th>
+                <th class="px-4 py-2 border">Estado Pedido</th>
+                <th class="px-4 py-2 border">Fecha Estimación</th>
+                <th class="px-4 py-2 border">Fecha Pedido</th>
+                <th class="px-4 py-2 border">Acciones</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="pedido : ${pedidos}">
+                <td th:text="${pedido.pedidoId}" class="px-4 py-2 border"></td>
+                <td th:text="${pedido.metodoPagoId}" class="px-4 py-2 border"></td>
+                <td th:text="${pedido.clienteId}" class="px-4 py-2 border"></td>
+                <td th:text="${pedido.estadoPedido}" class="px-4 py-2 border"></td>
+                <td th:text="${pedido.fechaEstimacion}" class="px-4 py-2 border"></td>
+                <td th:text="${pedido.fechaPedido}" class="px-4 py-2 border"></td>
+                <td class="px-4 py-2 border">
+                    <form th:action="@{/pedidos/delete/{id}(id=${pedido.pedidoId})}" method="post" style="display:inline;">
+                        <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Eliminar</button>
+                    </form>
+                    <form th:action="@{/pedidos/edit/{id}(id=${pedido.pedidoId})}" method="get" style="display:inline;">
+                        <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Editar</button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <h2 class="text-xl font-bold mt-8 mb-4">Agregar / Editar Pedido</h2>
+        <form th:action="@{/pedidos}" method="post" th:object="${pedido}" class="bg-white p-4 rounded-lg shadow-md">
+            <input type="hidden" th:field="*{pedidoId}" readonly />
+            <label for="metodoPagoId" class="block text-gray-700 font-bold mb-2">Método Pago ID:</label>
+            <input type="text" id="metodoPagoId" th:field="*{metodoPagoId}" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required />
+
+            <label for="clienteId" class="block text-gray-700 font-bold mb-2 mt-4">Cliente ID:</label>
+            <input type="text" id="clienteId" th:field="*{clienteId}" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required />
+
+            <label for="estadoPedido" class="block text-gray-700 font-bold mb-2 mt-4">Estado Pedido:</label>
+            <input type="text" id="estadoPedido" th:field="*{estadoPedido}" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required />
+
+            <label for="fechaEstimacion" class="block text-gray-700 font-bold mb-2 mt-4">Fecha Estimación:</label>
+            <input type="date" id="fechaEstimacion" th:field="*{fechaEstimacion}" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
+
+            <label for="fechaPedido" class="block text-gray-700 font-bold mb-2 mt-4">Fecha Pedido:</label>
+            <input type="date" id="fechaPedido" th:field="*{fechaPedido}" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required />
+
+            <button type="submit" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mt-4" th:text="${pedido.pedidoId == null ? 'Guardar' : 'Actualizar'}"></button>
+        </form>
+    </div>
+</main>
+
+<footer class="menu p-4 mt-8">
+    <div class="container text-center">
+        <p>&COPY; 2024 Ventas. Todos los derechos reservados.</p>
+    </div>
+</footer>
+
+</body>
+</html>

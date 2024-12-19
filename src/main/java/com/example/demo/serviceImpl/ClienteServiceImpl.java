@@ -1,6 +1,7 @@
 package com.example.demo.serviceImpl;
 
 import com.example.demo.dao.ClienteDao;
+import com.example.demo.dao.PreferenciaDao;
 import com.example.demo.domain.Cliente;
 import com.example.demo.service.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,11 +9,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-
-/**
- *
- * @author jeffer
- */
 
 @Service
 public class ClienteServiceImpl implements ClienteService {
@@ -33,14 +29,45 @@ public class ClienteServiceImpl implements ClienteService {
     }
 
     @Override
+    @Transactional(readOnly = true)
+    public Cliente getClienteById(Long id) {
+        return clienteDao.findById(id).orElse(null);
+    }
+
+    @Override
     @Transactional
     public void save(Cliente cliente) {
+        if (cliente.getClienteId() != null) {
+            // Si el cliente tiene un ID, actualiza el cliente existente
+            Cliente clienteExistente = clienteDao.findById(cliente.getClienteId()).orElse(null);
+            if (clienteExistente != null) {
+                clienteExistente.setNombre(cliente.getNombre());
+                clienteExistente.setPapellido(cliente.getPapellido());
+                clienteExistente.setSapellido(cliente.getSapellido());
+                clienteExistente.setCorreo(cliente.getCorreo());
+                clienteExistente.setPreferencias(cliente.getPreferencias());
+                clienteDao.save(clienteExistente);
+                return;
+            }
+        }
+        // Si el cliente no tiene un ID, crea uno nuevo
         clienteDao.save(cliente);
     }
+
 
     @Override
     @Transactional
     public void delete(Cliente cliente) {
         clienteDao.delete(cliente);
+    }
+
+    @Autowired
+    private PreferenciaDao preferenciaDao;
+
+    @Transactional
+    @Override
+    public void deleteById(Long id) {
+        preferenciaDao.deleteByClienteId(id); // Primero eliminar registros dependientes
+        clienteDao.deleteById(id); // Luego eliminar el cliente
     }
 }

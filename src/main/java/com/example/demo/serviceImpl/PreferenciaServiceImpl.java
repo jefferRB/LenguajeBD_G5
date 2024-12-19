@@ -8,10 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-/**
- *
- * @author Tom
- */
+
 @Service
 public class PreferenciaServiceImpl implements PreferenciaService {
 
@@ -31,6 +28,12 @@ public class PreferenciaServiceImpl implements PreferenciaService {
     }
 
     @Override
+    @Transactional(readOnly = true)
+    public Preferencia getPreferenciaById(Long id) {
+        return preferenciaDao.findById(id).orElse(null);
+    }
+
+    @Override
     @Transactional
     public void save(Preferencia preferencia) {
         preferenciaDao.save(preferencia);
@@ -40,5 +43,11 @@ public class PreferenciaServiceImpl implements PreferenciaService {
     @Transactional
     public void delete(Preferencia preferencia) {
         preferenciaDao.delete(preferencia);
+    }
+
+    @Override
+    @Transactional
+    public void deleteById(Long id) {
+        preferenciaDao.deleteById(id);
     }
 }

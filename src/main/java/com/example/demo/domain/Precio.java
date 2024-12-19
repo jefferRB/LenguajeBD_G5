@@ -6,10 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.io.Serializable;
 import java.util.Date;
-/**
- *
- * @author Tom
- */
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -19,6 +16,7 @@ public class Precio implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "PRECIO_ID")
     private Long precioId;
 
     @Column(name = "PRODUCTO_ID", nullable = false)
@@ -31,7 +29,7 @@ public class Precio implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date fechaVigencia;
 
-   
+    // Constructor adicional para la clave primaria
     public Precio(Long precioId) {
         this.precioId = precioId;
     }

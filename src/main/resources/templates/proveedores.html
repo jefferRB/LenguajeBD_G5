@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Proveedores</title>
+    <style>
+        @tailwind base;
+        @tailwind components;
+        @tailwind utilities;
+
+        body {
+            font-family: 'Arial', sans-serif;
+        }
+
+        .menu {
+            background-color: #1a202c;
+            color: white;
+        }
+
+        .menu a {
+            color: white;
+            text-decoration: none;
+            padding: 1rem;
+        }
+
+        .menu a:hover {
+            background-color: #2d3748;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+
+        .content {
+            padding: 2rem;
+            background-color: #f7fafc;
+            border-radius: 0.5rem;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+
+<header class="menu p-4">
+    <nav class="container flex justify-between items-center">
+        <div>
+            <a href="http://localhost" class="mr-4">Inicio</a>
+            <a href="http://localhost/clientes" class="mr-4">Clientes</a>
+            <a href="http://localhost/proveedores" class="mr-4">Proveedores</a>
+            <a href="http://localhost/productos" class="mr-4">Productos</a>
+            <a href="http://localhost/telefonos" class="mr-4">Teléfonos</a>
+            <a href="http://localhost/tienda" class="mr-4">Tienda</a>
+            <a href="http://localhost/preferencias" class="mr-4">Preferencias</a>
+            <a href="http://localhost/pedidos" class="mr-4">Pedidos</a>
+            <a href="http://localhost/detalle_pedidos" class="mr-4">Detalle Pedidos</a>
+            <a href="http://localhost/inventarios" class="mr-4">Inventarios</a>
+            <a href="http://localhost/tipometodos" class="mr-4">Tipo Métodos</a>
+            <a href="http://localhost/metodo_pagos" class="mr-4">Método Pagos</a>
+            <a href="http://localhost/precios" class="mr-4">Precios</a>
+            <a href="http://localhost/categoria_productos" class="mr-4">Categoría Productos</a>
+            <a href="http://localhost/descuentos" class="mr-4">Descuentos</a>
+        </div>
+        <div class="flex items-center">
+            <h1 class="text-lg font-bold">Gestión de Ventas</h1>
+        </div>
+    </nav>
+</header>
+
+<main class="container mt-4">
+    <div class="content">
+        <h2 class="text-2xl font-bold mb-4">Gestión de Proveedores</h2>
+        <h2 class="text-xl font-bold mb-4">Lista de Proveedores</h2>
+        <table class="min-w-full bg-white border border-gray-200">
+            <thead>
+            <tr>
+                <th class="px-4 py-2 border">ID</th>
+                <th class="px-4 py-2 border">Nombre</th>
+                <th class="px-4 py-2 border">Primer Apellido</th>
+                <th class="px-4 py-2 border">Segundo Apellido</th>
+                <th class="px-4 py-2 border">Contacto</th>
+                <th class="px-4 py-2 border">Condiciones de Compra</th>
+                <th class="px-4 py-2 border">Acciones</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="proveedor : ${proveedores}">
+                <td th:text="${proveedor.proveedorId}" class="px-4 py-2 border"></td>
+                <td th:text="${proveedor.nombre}" class="px-4 py-2 border"></td>
+                <td th:text="${proveedor.primerApellido}" class="px-4 py-2 border"></td>
+                <td th:text="${proveedor.segundoApellido}" class="px-4 py-2 border"></td>
+                <td th:text="${proveedor.contacto}" class="px-4 py-2 border"></td>
+                <td th:text="${proveedor.condicionesCompra}" class="px-4 py-2 border"></td>
+                <td class="px-4 py-2 border">
+                    <form th:action="@{/proveedores/delete/{id}(id=${proveedor.proveedorId})}" method="post" style="display:inline;">
+                        <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Eliminar</button>
+                    </form>
+                    <form th:action="@{/proveedores/edit/{id}(id=${proveedor.proveedorId})}" method="get" style="display:inline;">
+                        <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Editar</button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <h2 class="text-xl font-bold mt-8 mb-4">Agregar / Editar Proveedor</h2>
+        <form th:action="@{/proveedores}" method="post" th:object="${proveedor}" class="bg-white p-4 rounded-lg shadow-md">
+            <input type="hidden" th:field="*{proveedorId}" readonly />
+            <label for="nombre" class="block text-gray-700 font-bold mb-2">Nombre:</label>
+            <input type="text" id="nombre" th:field="*{nombre}" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required />
+
+            <label for="primerApellido" class="block text-gray-700 font-bold mb-2 mt-4">Primer Apellido:</label>
+            <input type="text" id="primerApellido" th:field="*{primerApellido}" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
+
+            <label for="segundoApellido" class="block text-gray-700 font-bold mb-2 mt-4">Segundo Apellido:</label>
+            <input type="text" id="segundoApellido" th:field="*{segundoApellido}" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
+
+            <label for="contacto" class="block text-gray-700 font-bold mb-2 mt-4">Contacto:</label>
+            <input type="text" id="contacto" th:field="*{contacto}" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required />
+
+            <label for="condicionesCompra" class="block text-gray-700 font-bold mb-2 mt-4">Condiciones de Compra:</label>
+            <input type="text" id="condicionesCompra" th:field="*{condicionesCompra}" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
+
+            <button type="submit" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mt-4" th:text="${proveedor.proveedorId == null ? 'Guardar' : 'Actualizar'}"></button>
+        </form>
+    </div>
+</main>
+
+<footer class="menu p-4 mt-8">
+    <div class="container text-center">
+        <p>&COPY; 2024 Ventas. Todos los derechos reservados.</p>
+    </div>
+</footer>
+
+</body>
+</html>

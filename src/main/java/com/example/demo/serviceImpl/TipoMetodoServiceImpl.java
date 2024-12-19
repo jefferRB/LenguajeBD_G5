@@ -9,10 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-/**
- *
- * @author Tom
- */
 @Service
 public class TipoMetodoServiceImpl implements TipoMetodoService {
 
@@ -32,6 +28,12 @@ public class TipoMetodoServiceImpl implements TipoMetodoService {
     }
 
     @Override
+    @Transactional(readOnly = true)
+    public TipoMetodo getTipoMetodoById(Long id) {
+        return tipoMetodoDao.findById(id).orElse(null);
+    }
+
+    @Override
     @Transactional
     public void save(TipoMetodo tipoMetodo) {
         tipoMetodoDao.save(tipoMetodo);
@@ -41,5 +43,11 @@ public class TipoMetodoServiceImpl implements TipoMetodoService {
     @Transactional
     public void delete(TipoMetodo tipoMetodo) {
         tipoMetodoDao.delete(tipoMetodo);
+    }
+
+    @Override
+    @Transactional
+    public void deleteById(Long id) {
+        tipoMetodoDao.deleteById(id);
     }
 }

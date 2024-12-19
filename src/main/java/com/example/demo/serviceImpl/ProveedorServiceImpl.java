@@ -9,10 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-/**
- *
- * @author Tom
- */
 @Service
 public class ProveedorServiceImpl implements ProveedorService {
 
@@ -32,6 +28,12 @@ public class ProveedorServiceImpl implements ProveedorService {
     }
 
     @Override
+    @Transactional(readOnly = true)
+    public Proveedor getProveedorById(Long id) {
+        return proveedorDao.findById(id).orElse(null);
+    }
+
+    @Override
     @Transactional
     public void save(Proveedor proveedor) {
         proveedorDao.save(proveedor);
@@ -41,5 +43,11 @@ public class ProveedorServiceImpl implements ProveedorService {
     @Transactional
     public void delete(Proveedor proveedor) {
         proveedorDao.delete(proveedor);
+    }
+
+    @Override
+    @Transactional
+    public void deleteById(Long id) {
+        proveedorDao.deleteById(id);
     }
 }

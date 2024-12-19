@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tienda Tecnológica</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+    }
+    .menu {
+      background-color: #1a202c;
+      color: white;
+    }
+    .menu a {
+      color: white;
+      text-decoration: none;
+      padding: 1rem;
+    }
+    .menu a:hover {
+      background-color: #2d3748;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 1rem;
+    }
+    .content {
+      padding: 2rem;
+      background-color: #f7fafc;
+      border-radius: 0.5rem;
+    }
+    .alert {
+      padding: 1rem;
+      border-radius: 0.25rem;
+      margin-bottom: 1rem;
+    }
+    .alert-success {
+      background-color: #d4edda;
+      color: #155724;
+    }
+    .alert-error {
+      background-color: #f8d7da;
+      color: #721c24;
+    }
+  </style>
+</head>
+<body class="bg-gray-100">
+
+<header class="menu p-4">
+  <nav class="container flex justify-between items-center">
+    <div>
+      <a href="/" class="mr-4">Inicio</a>
+      <a href="/clientes" class="mr-4">Clientes</a>
+      <a href="/proveedores" class="mr-4">Proveedores</a>
+      <a href="/productos" class="mr-4">Productos</a>
+      <a href="/telefonos" class="mr-4">Teléfonos</a>
+      <a href="/tienda" class="mr-4">Tienda</a>
+      <a href="/preferencias" class="mr-4">Preferencias</a>
+      <a href="/pedidos" class="mr-4">Pedidos</a>
+      <a href="/detalle_pedidos" class="mr-4">Detalle Pedidos</a>
+      <a href="/inventarios" class="mr-4">Inventarios</a>
+      <a href="/tipometodos" class="mr-4">Tipo Métodos</a>
+      <a href="/metodo_pagos" class="mr-4">Método Pagos</a>
+      <a href="/precios" class="mr-4">Precios</a>
+      <a href="/categoria_productos" class="mr-4">Categoría Productos</a>
+      <a href="/descuentos" class="mr-4">Descuentos</a>
+    </div>
+  </nav>
+</header>
+
+<main class="container mt-4">
+  <div class="content">
+    <h2 class="text-2xl font-bold mb-4">Tienda Tecnológica</h2>
+
+    <!-- Mensajes de éxito o error -->
+    <div th:if="${message}" class="alert alert-success" role="alert">
+      <p th:text="${message}"></p>
+    </div>
+    <div th:if="${error}" class="alert alert-error" role="alert">
+      <p th:text="${error}"></p>
+    </div>
+
+    <!-- Lista de productos -->
+    <h2 class="text-xl font-bold mb-4">Lista de Productos</h2>
+    <table class="min-w-full bg-white border border-gray-200">
+      <thead>
+      <tr>
+        <th class="px-4 py-2 border">ID</th>
+        <th class="px-4 py-2 border">Nombre</th>
+        <th class="px-4 py-2 border">Especificaciones</th>
+        <th class="px-4 py-2 border">Precio</th>
+        <th class="px-4 py-2 border">Stock</th>
+        <th class="px-4 py-2 border">Acciones</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="producto : ${productos}">
+        <td th:text="${producto.productoId}" class="px-4 py-2 border"></td>
+        <td th:text="${producto.nombre}" class="px-4 py-2 border"></td>
+        <td th:text="${producto.especificaciones}" class="px-4 py-2 border"></td>
+
+        <td class="px-4 py-2 border">
+          <form th:action="@{/tienda/comprar}" method="post" style="display:inline;">
+            <input type="hidden" name="productoId" th:value="${producto.productoId}">
+            <label>
+              <input type="number" name="cantidad" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+            </label>
+            <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Comprar</button>
+          </form>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</main>
+
+<footer class="menu p-4 mt-8">
+  <div class="container text-center">
+    <p>&COPY; 2024 Ventas. Todos los derechos reservados.</p>
+  </div>
+</footer>
+
+</body>
+</html>

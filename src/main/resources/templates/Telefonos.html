@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Teléfonos</title>
+    <style>
+        @tailwind base;
+        @tailwind components;
+        @tailwind utilities;
+
+        body {
+            font-family: 'Arial', sans-serif;
+        }
+
+        .menu {
+            background-color: #1a202c;
+            color: white;
+        }
+
+        .menu a {
+            color: white;
+            text-decoration: none;
+            padding: 1rem;
+        }
+
+        .menu a:hover {
+            background-color: #2d3748;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+
+        .content {
+            padding: 2rem;
+            background-color: #f7fafc;
+            border-radius: 0.5rem;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+
+<header class="menu p-4">
+    <nav class="container flex justify-between items-center">
+        <div>
+            <a href="http://localhost" class="mr-4">Inicio</a>
+            <a href="http://localhost/clientes" class="mr-4">Clientes</a>
+            <a href="http://localhost/proveedores" class="mr-4">Proveedores</a>
+            <a href="http://localhost/productos" class="mr-4">Productos</a>
+            <a href="http://localhost/telefonos" class="mr-4">Telefonos</a>
+            <a href="http://localhost/tienda" class="mr-4">Tienda</a>
+        </div>
+        <div class="flex items-center">
+            <h1 class="text-lg font-bold">Gestión de Ventas</h1>
+        </div>
+    </nav>
+</header>
+
+<main class="container mt-4">
+    <div class="content">
+        <h2 class="text-2xl font-bold mb-4">Gestión de Teléfonos</h2>
+        <h2 class="text-xl font-bold mb-4">Lista de Teléfonos</h2>
+        <table class="min-w-full bg-white border border-gray-200">
+            <thead>
+            <tr>
+                <th class="px-4 py-2 border">ID</th>
+                <th class="px-4 py-2 border">Cliente ID</th>
+                <th class="px-4 py-2 border">Teléfono</th>
+                <th class="px-4 py-2 border">Acciones</th>
+            </tr>
+            </thead>
+            <tbody>
+            <!--/*@thymesVar id="telefono" type="com.example.demo.domain.Telefono"*/-->
+            <tr th:each="telefono : ${telefonos}">
+
+                <td th:text="${telefono.telefonoId}" class="px-4 py-2 border"></td>
+                <td th:text="${telefono.clienteId}" class="px-4 py-2 border"></td>
+                <td th:text="${telefono.telefono}" class="px-4 py-2 border"></td>
+                <td class="px-4 py-2 border">
+                    <form th:action="@{/telefonos/delete/{id}(id=${telefono.telefonoId})}" method="post" style="display:inline;">
+                        <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Eliminar</button>
+                    </form>
+                    <form th:action="@{/telefonos/edit/{id}(id=${telefono.telefonoId})}" method="get" style="display:inline;">
+                        <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Editar</button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <h2 class="text-xl font-bold mt-8 mb-4">Agregar / Editar Teléfono</h2>
+        <!--/*@thymesVar id="telefono" type="com.example.demo.domain.Telefono"*/-->
+        <form th:action="@{/telefonos}" method="post" th:object="${telefono}" class="bg-white p-4 rounded-lg shadow-md">
+            <input type="hidden" th:field="*{telefonoId}" readonly />
+            <label for="clienteId" class="block text-gray-700 font-bold mb-2">Cliente ID:</label>
+            <input type="text" id="clienteId" th:field="*{clienteId}" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required />
+
+            <label for="telefono" class="block text-gray-700 font-bold mb-2 mt-4">Teléfono:</label>
+            <input type="text" id="telefono" th:field="*{telefono}" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required />
+
+            <button type="submit" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mt-4" th:text="${telefono.telefonoId == null ? 'Guardar' : 'Actualizar'}"></button>
+        </form>
+    </div>
+</main>
+
+<footer class="menu p-4 mt-8">
+    <div class="container text-center">
+        <p>&COPY; 2024 Ventas. Todos los derechos reservados.</p>
+    </div>
+</footer>
+
+</body>
+</html>

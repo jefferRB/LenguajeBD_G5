@@ -8,10 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-/**
- *
- * @author Tom
- */
+
 @Service
 public class DescuentoServiceImpl implements DescuentoService {
 
@@ -31,6 +28,12 @@ public class DescuentoServiceImpl implements DescuentoService {
     }
 
     @Override
+    @Transactional(readOnly = true)
+    public Descuento getDescuentoById(Long id) {
+        return descuentoDao.findById(id).orElse(null);
+    }
+
+    @Override
     @Transactional
     public void save(Descuento descuento) {
         descuentoDao.save(descuento);
@@ -40,5 +43,11 @@ public class DescuentoServiceImpl implements DescuentoService {
     @Transactional
     public void delete(Descuento descuento) {
         descuentoDao.delete(descuento);
+    }
+
+    @Override
+    @Transactional
+    public void deleteById(Long id) {
+        descuentoDao.deleteById(id);
     }
 }

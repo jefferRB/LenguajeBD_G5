@@ -3,47 +3,52 @@ package com.example.demo.controller;
 import com.example.demo.domain.Preferencia;
 import com.example.demo.service.PreferenciaService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-/**
- *
- * @author Tom
- */
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.List;
+
 @Controller
-@RequestMapping("/preferencia")
+@RequestMapping("/preferencias")
 public class PreferenciaController {
 
     @Autowired
     private PreferenciaService preferenciaService;
 
-    @GetMapping("/listado")
-    public String listado(Model model) {
-        var lista = preferenciaService.getPreferencias();
-        model.addAttribute("preferencias", lista);
-        model.addAttribute("totalPreferencias", lista.size());
-        return "/preferencia/listado";
+    @GetMapping
+    public String listPreferencias(Model model) {
+        List<Preferencia> preferencias = preferenciaService.getPreferencias();
+        model.addAttribute("preferencias", preferencias);
+        model.addAttribute("preferencia", new Preferencia()); // Para el formulario de agregar
+        return "preferencias"; // Nombre de la vista
     }
 
-    @PostMapping("/guardar")
-    public String save(Preferencia preferencia) {
+    @PostMapping
+    public String savePreferencia(@ModelAttribute Preferencia preferencia) {
         preferenciaService.save(preferencia);
-        return "redirect:/preferencia/listado";
+        return "redirect:/preferencias"; // Redirigir a la lista de preferencias
     }
 
-    @GetMapping("/modifica/{preferenciaId}")
-    public String modifica(@PathVariable("preferenciaId") Long preferenciaId, Model model) {
-        Preferencia preferencia = preferenciaService.getPreferencia(new Preferencia(preferenciaId));
+    @GetMapping("/edit/{id}")
+    public String editPreferencia(@PathVariable("id") Long id, Model model) {
+        Preferencia preferencia = preferenciaService.getPreferenciaById(id);
+        List<Preferencia> preferencias = preferenciaService.getPreferencias(); // Cargar nuevamente la lista de preferencias
         model.addAttribute("preferencia", preferencia);
-        return "/preferencia/modifica";
+        model.addAttribute("preferencias", preferencias); // Asegurarse de que la lista se envíe a la vista
+        return "preferencias"; // Nombre de la vista
     }
 
-    @GetMapping("/eliminar/{preferenciaId}")
-    public String elimina(@PathVariable("preferenciaId") Long preferenciaId) {
-        preferenciaService.delete(new Preferencia(preferenciaId));
-        return "redirect:/preferencia/listado";
+    @PostMapping("/delete/{id}")
+    public String deletePreferencia(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+        try {
+            preferenciaService.deleteById(id);
+            redirectAttributes.addFlashAttribute("message", "Preferencia eliminada correctamente.");
+        } catch (DataIntegrityViolationException e) {
+            redirectAttributes.addFlashAttribute("error", "No se puede eliminar la preferencia porque tiene registros asociados.");
+        }
+        return "redirect:/preferencias"; // Redirigir a la lista de preferencias
     }
 }

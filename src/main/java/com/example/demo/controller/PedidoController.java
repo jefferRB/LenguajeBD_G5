@@ -3,48 +3,52 @@ package com.example.demo.controller;
 import com.example.demo.domain.Pedido;
 import com.example.demo.service.PedidoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-/**
- *
- * @author Tom
- */
+import java.util.List;
+
 @Controller
-@RequestMapping("/pedido")
+@RequestMapping("/pedidos")
 public class PedidoController {
 
     @Autowired
     private PedidoService pedidoService;
 
-    @GetMapping("/listado")
-    public String listado(Model model) {
-        var lista = pedidoService.getPedidos();
-        model.addAttribute("pedidos", lista);
-        model.addAttribute("totalPedidos", lista.size());
-        return "/pedido/listado";
+    @GetMapping
+    public String listPedidos(Model model) {
+        List<Pedido> pedidos = pedidoService.getPedidos();
+        model.addAttribute("pedidos", pedidos);
+        model.addAttribute("pedido", new Pedido()); // Para el formulario de agregar
+        return "pedidos"; // Nombre de la vista
     }
 
-    @PostMapping("/guardar")
-    public String save(Pedido pedido) {
+    @PostMapping
+    public String savePedido(@ModelAttribute Pedido pedido) {
         pedidoService.save(pedido);
-        return "redirect:/pedido/listado";
+        return "redirect:/pedidos"; // Redirigir a la lista de pedidos
     }
 
-    @GetMapping("/modifica/{pedidoId}")
-    public String modifica(@PathVariable("pedidoId") Long pedidoId, Model model) {
-        Pedido pedido = pedidoService.getPedido(new Pedido(pedidoId));
+    @GetMapping("/edit/{id}")
+    public String editPedido(@PathVariable("id") Long id, Model model) {
+        Pedido pedido = pedidoService.getPedidoById(id);
+        List<Pedido> pedidos = pedidoService.getPedidos(); // Cargar nuevamente la lista de pedidos
         model.addAttribute("pedido", pedido);
-        return "/pedido/modifica";
+        model.addAttribute("pedidos", pedidos); // Asegurarse de que la lista se envíe a la vista
+        return "pedidos"; // Nombre de la vista
     }
 
-    @GetMapping("/eliminar/{pedidoId}")
-    public String elimina(@PathVariable("pedidoId") Long pedidoId) {
-        pedidoService.delete(new Pedido(pedidoId));
-        return "redirect:/pedido/listado";
+    @PostMapping("/delete/{id}")
+    public String deletePedido(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+        try {
+            pedidoService.deleteById(id);
+            redirectAttributes.addFlashAttribute("message", "Pedido eliminado correctamente.");
+        } catch (DataIntegrityViolationException e) {
+            redirectAttributes.addFlashAttribute("error", "No se puede eliminar el pedido porque tiene registros asociados.");
+        }
+        return "redirect:/pedidos"; // Redirigir a la lista de pedidos
     }
 }

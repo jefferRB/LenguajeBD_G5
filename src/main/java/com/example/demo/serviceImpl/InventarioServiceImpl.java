@@ -9,10 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-/**
- *
- * @author Tom
- */
 @Service
 public class InventarioServiceImpl implements InventarioService {
 
@@ -25,11 +21,13 @@ public class InventarioServiceImpl implements InventarioService {
         return inventarioDao.findAll();
     }
 
+
     @Override
     @Transactional(readOnly = true)
-    public Inventario getInventario(Inventario inventario) {
-        return inventarioDao.findById(inventario.getInventarioId()).orElse(null);
+    public Inventario getInventarioById(Long id) {
+        return inventarioDao.findById(id).orElse(null);
     }
+
 
     @Override
     @Transactional
@@ -41,5 +39,11 @@ public class InventarioServiceImpl implements InventarioService {
     @Transactional
     public void delete(Inventario inventario) {
         inventarioDao.delete(inventario);
+    }
+
+    @Override
+    @Transactional
+    public void deleteById(Long id) {
+        inventarioDao.deleteById(id);
     }
 }

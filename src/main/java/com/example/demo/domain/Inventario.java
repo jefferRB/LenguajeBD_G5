@@ -7,10 +7,6 @@ import lombok.NoArgsConstructor;
 import java.io.Serializable;
 import java.util.Date;
 
-/**
- *
- * @author Tom
- */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -20,6 +16,7 @@ public class Inventario implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "INVENTARIO_ID")
     private Long inventarioId;
 
     @Column(name = "PRODUCTO_ID", nullable = false)
@@ -32,7 +29,7 @@ public class Inventario implements Serializable {
     @Column(name = "CANTIDAD_DISPONIBLE", nullable = false)
     private Integer cantidadDisponible;
 
-   
+    // Constructor adicional para la clave primaria
     public Inventario(Long inventarioId) {
         this.inventarioId = inventarioId;
     }

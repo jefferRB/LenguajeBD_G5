@@ -9,10 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-/**
- *
- * @author Tom
- */
 @Service
 public class PrecioServiceImpl implements PrecioService {
 
@@ -32,6 +28,12 @@ public class PrecioServiceImpl implements PrecioService {
     }
 
     @Override
+    @Transactional(readOnly = true)
+    public Precio getPrecioById(Long id) {
+        return precioDao.findById(id).orElse(null);
+    }
+
+    @Override
     @Transactional
     public void save(Precio precio) {
         precioDao.save(precio);
@@ -41,5 +43,11 @@ public class PrecioServiceImpl implements PrecioService {
     @Transactional
     public void delete(Precio precio) {
         precioDao.delete(precio);
+    }
+
+    @Override
+    @Transactional
+    public void deleteById(Long id) {
+        precioDao.deleteById(id);
     }
 }

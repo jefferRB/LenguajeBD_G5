@@ -4,15 +4,12 @@ import com.example.demo.dao.CategoriaProductoDao;
 import com.example.demo.domain.CategoriaProducto;
 import com.example.demo.service.CategoriaProductoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-/**
- *
- * @author Tom
- */
 @Service
 public class CategoriaProductoServiceImpl implements CategoriaProductoService {
 
@@ -32,6 +29,12 @@ public class CategoriaProductoServiceImpl implements CategoriaProductoService {
     }
 
     @Override
+    @Transactional(readOnly = true)
+    public CategoriaProducto getCategoriaById(Long id) {
+        return categoriaProductoDao.findById(id).orElse(null);
+    }
+
+    @Override
     @Transactional
     public void save(CategoriaProducto categoria) {
         categoriaProductoDao.save(categoria);
@@ -41,5 +44,11 @@ public class CategoriaProductoServiceImpl implements CategoriaProductoService {
     @Transactional
     public void delete(CategoriaProducto categoria) {
         categoriaProductoDao.delete(categoria);
+    }
+
+    @Override
+    @Transactional
+    public void deleteById(Long id) {
+        categoriaProductoDao.deleteById(id);
     }
 }

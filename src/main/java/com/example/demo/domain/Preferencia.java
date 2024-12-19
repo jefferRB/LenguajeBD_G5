@@ -6,10 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.io.Serializable;
 
-/**
- *
- * @author Tom
- */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -19,15 +15,17 @@ public class Preferencia implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "PREFERENCIAS_ID")
     private Long preferenciaId;
-
-    @Column(name = "CLIENTE_ID", nullable = false)
-    private Long clienteId;
 
     @Column(name = "PREFERENCIA", nullable = false, length = 255)
     private String preferencia;
 
-    
+    @ManyToOne
+    @JoinColumn(name = "CLIENTE_ID", nullable = false)  // Añadido nullable=false
+    private Cliente cliente;
+
+    // Constructor adicional para la clave primaria
     public Preferencia(Long preferenciaId) {
         this.preferenciaId = preferenciaId;
     }

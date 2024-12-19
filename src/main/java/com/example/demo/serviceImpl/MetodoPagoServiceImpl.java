@@ -9,10 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-/**
- *
- * @author Tom
- */
 @Service
 public class MetodoPagoServiceImpl implements MetodoPagoService {
 
@@ -32,6 +28,12 @@ public class MetodoPagoServiceImpl implements MetodoPagoService {
     }
 
     @Override
+    @Transactional(readOnly = true)
+    public MetodoPago getMetodoPagoById(Long id) {
+        return metodoPagoDao.findById(id).orElse(null);
+    }
+
+    @Override
     @Transactional
     public void save(MetodoPago metodoPago) {
         metodoPagoDao.save(metodoPago);
@@ -41,5 +43,11 @@ public class MetodoPagoServiceImpl implements MetodoPagoService {
     @Transactional
     public void delete(MetodoPago metodoPago) {
         metodoPagoDao.delete(metodoPago);
+    }
+
+    @Override
+    @Transactional
+    public void deleteById(Long id) {
+        metodoPagoDao.deleteById(id);
     }
 }

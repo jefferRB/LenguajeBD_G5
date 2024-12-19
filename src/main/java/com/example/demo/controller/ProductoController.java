@@ -3,48 +3,52 @@ package com.example.demo.controller;
 import com.example.demo.domain.Producto;
 import com.example.demo.service.ProductoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-/**
- *
- * @author Tom
- */
+import java.util.List;
+
 @Controller
-@RequestMapping("/producto")
+@RequestMapping("/productos")
 public class ProductoController {
 
     @Autowired
     private ProductoService productoService;
 
-    @GetMapping("/listado")
-    public String listado(Model model) {
-        var lista = productoService.getProductos();
-        model.addAttribute("productos", lista);
-        model.addAttribute("totalProductos", lista.size());
-        return "/producto/listado";
+    @GetMapping
+    public String listProductos(Model model) {
+        List<Producto> productos = productoService.getProductos();
+        model.addAttribute("productos", productos);
+        model.addAttribute("producto", new Producto()); // Para el formulario de agregar
+        return "productos"; // Nombre de la vista
     }
 
-    @PostMapping("/guardar")
-    public String save(Producto producto) {
+    @PostMapping
+    public String saveProducto(@ModelAttribute Producto producto) {
         productoService.save(producto);
-        return "redirect:/producto/listado";
+        return "redirect:/productos"; // Redirigir a la lista de productos
     }
 
-    @GetMapping("/modifica/{productoId}")
-    public String modifica(@PathVariable("productoId") Long productoId, Model model) {
-        Producto producto = productoService.getProducto(new Producto(productoId));
+    @GetMapping("/edit/{id}")
+    public String editProducto(@PathVariable("id") Long id, Model model) {
+        Producto producto = productoService.getProductoById(id);
+        List<Producto> productos = productoService.getProductos(); // Cargar nuevamente la lista de productos
         model.addAttribute("producto", producto);
-        return "/producto/modifica";
+        model.addAttribute("productos", productos); // Asegurarse de que la lista se envíe a la vista
+        return "productos"; // Nombre de la vista
     }
 
-    @GetMapping("/eliminar/{productoId}")
-    public String elimina(@PathVariable("productoId") Long productoId) {
-        productoService.delete(new Producto(productoId));
-        return "redirect:/producto/listado";
+    @PostMapping("/delete/{id}")
+    public String deleteProducto(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+        try {
+            productoService.deleteById(id);
+            redirectAttributes.addFlashAttribute("message", "Producto eliminado correctamente.");
+        } catch (DataIntegrityViolationException e) {
+            redirectAttributes.addFlashAttribute("error", "No se puede eliminar el producto porque tiene registros asociados.");
+        }
+        return "redirect:/productos"; // Redirigir a la lista de productos
     }
 }

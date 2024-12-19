@@ -8,10 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-/**
- *
- * @author Tom
- */
+
 @Service
 public class TelefonoServiceImpl implements TelefonoService {
 
@@ -31,6 +28,12 @@ public class TelefonoServiceImpl implements TelefonoService {
     }
 
     @Override
+    @Transactional(readOnly = true)
+    public Telefono getTelefonoById(Long id) {
+        return telefonoDao.findById(id).orElse(null);
+    }
+
+    @Override
     @Transactional
     public void save(Telefono telefono) {
         telefonoDao.save(telefono);
@@ -40,5 +43,11 @@ public class TelefonoServiceImpl implements TelefonoService {
     @Transactional
     public void delete(Telefono telefono) {
         telefonoDao.delete(telefono);
+    }
+
+    @Override
+    @Transactional
+    public void deleteById(Long id) {
+        telefonoDao.deleteById(id);
     }
 }

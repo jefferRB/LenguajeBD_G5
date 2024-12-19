@@ -12,7 +12,11 @@ public interface ClienteService {
 
     Cliente getCliente(Cliente cliente);
 
+    Cliente getClienteById(Long id);
+
     void save(Cliente cliente);
 
     void delete(Cliente cliente);
+
+    void deleteById(Long id);
 }

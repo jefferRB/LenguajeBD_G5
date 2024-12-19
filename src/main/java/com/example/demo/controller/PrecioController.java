@@ -3,48 +3,52 @@ package com.example.demo.controller;
 import com.example.demo.domain.Precio;
 import com.example.demo.service.PrecioService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-/**
- *
- * @author Tom
- */
+import java.util.List;
+
 @Controller
-@RequestMapping("/precio")
+@RequestMapping("/precios")
 public class PrecioController {
 
     @Autowired
     private PrecioService precioService;
 
-    @GetMapping("/listado")
-    public String listado(Model model) {
-        var lista = precioService.getPrecios();
-        model.addAttribute("precios", lista);
-        model.addAttribute("totalPrecios", lista.size());
-        return "/precio/listado";
+    @GetMapping
+    public String listPrecios(Model model) {
+        List<Precio> precios = precioService.getPrecios();
+        model.addAttribute("precios", precios);
+        model.addAttribute("precio", new Precio()); // Para el formulario de agregar
+        return "precios"; // Nombre de la vista
     }
 
-    @PostMapping("/guardar")
-    public String save(Precio precio) {
+    @PostMapping
+    public String savePrecio(@ModelAttribute Precio precio) {
         precioService.save(precio);
-        return "redirect:/precio/listado";
+        return "redirect:/precios"; // Redirigir a la lista de precios
     }
 
-    @GetMapping("/modifica/{precioId}")
-    public String modifica(@PathVariable("precioId") Long precioId, Model model) {
-        Precio precio = precioService.getPrecio(new Precio(precioId));
+    @GetMapping("/edit/{id}")
+    public String editPrecio(@PathVariable("id") Long id, Model model) {
+        Precio precio = precioService.getPrecioById(id);
+        List<Precio> precios = precioService.getPrecios(); // Cargar nuevamente la lista de precios
         model.addAttribute("precio", precio);
-        return "/precio/modifica";
+        model.addAttribute("precios", precios); // Asegurarse de que la lista se envíe a la vista
+        return "precios"; // Nombre de la vista
     }
 
-    @GetMapping("/eliminar/{precioId}")
-    public String elimina(@PathVariable("precioId") Long precioId) {
-        precioService.delete(new Precio(precioId));
-        return "redirect:/precio/listado";
+    @PostMapping("/delete/{id}")
+    public String deletePrecio(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+        try {
+            precioService.deleteById(id);
+            redirectAttributes.addFlashAttribute("message", "Precio eliminado correctamente.");
+        } catch (DataIntegrityViolationException e) {
+            redirectAttributes.addFlashAttribute("error", "No se puede eliminar el precio porque tiene registros asociados.");
+        }
+        return "redirect:/precios"; // Redirigir a la lista de precios
     }
 }
